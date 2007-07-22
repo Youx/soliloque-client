@@ -14,6 +14,7 @@
 #define TYPE_SERVER_INFO_RESPONSE GINT32_TO_LE(0x0005bef0)
 
 
-void send_message2(guint32 * client_id, int s, const struct sockaddr * to);
+void send_message2(guint32 private_id, guint32 public_id, int s, const struct sockaddr * to);
 
 #endif
+

@@ -13,18 +13,15 @@
 #include <glib.h>
 #include <stdlib.h>
 #include <string.h>
-
+#include <sys/types.h>
+#include <arpa/inet.h>
 
 #define TYPE_ACKNOWLEDGE GINT32_TO_LE(0x0000bef1)
 
 
-struct acknowledge {
-  guint32 function;
-  guint32 client_id[2];
-  guint32 counter;
-};
 
-struct acknowledge * init_acknowledge(guint32 * client_id);
+void send_acknowledge(guint32 private_id, guint32 public_id, int s, const struct sockaddr * to);
 
 
 #endif
+

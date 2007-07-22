@@ -19,7 +19,8 @@
 
 
 struct server_info {
-	guint32 client_id[2];
+	guint32 private_id;
+	guint32 public_id;
 	char servername[30];
 	char machine[30];
 };
@@ -28,3 +29,4 @@ struct server_info * decode_server_info(void * resp);
 void print_server_info(struct server_info * si);
 
 #endif
+

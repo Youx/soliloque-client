@@ -17,6 +17,7 @@
 #include <strings.h>
 #include <arpa/inet.h> /* htons */
 #include <stdlib.h>
+#include <string.h>
 
 #include "crc.h"
 
@@ -41,3 +42,4 @@ struct connection_request {
 int connect_to(struct connection_request * req, int * sockfd, struct sockaddr_in * servaddr);
 
 #endif
+
