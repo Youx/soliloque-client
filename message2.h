@@ -1,0 +1,19 @@
+#ifndef __MESSAGE2_H__
+#define __MESSAGE2_H__
+
+#include <glib.h>
+#include <stdlib.h>
+#include "crc.h"
+
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <string.h>
+
+#define TYPE_SERVER_INFO_RESPONSE GINT32_TO_LE(0x0005bef0)
+
+
+void send_message2(guint32 * client_id, int s, const struct sockaddr * to);
+
+#endif
