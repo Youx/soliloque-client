@@ -25,7 +25,7 @@ int main() {
   };
 
 
-  sockfd = connect_to(&connectme, &sockfd, &servaddr);
+  connect_to(&connectme, &sockfd, &servaddr);
   receive(sockfd, &servaddr);
   return 0;
 }

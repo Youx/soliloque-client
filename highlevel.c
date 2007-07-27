@@ -13,7 +13,7 @@
 #include "message2.h"
 #include "server_info.h"
 #include "acknowledge.h"
-
+#include "channel_list.h"
 
 
 
@@ -28,21 +28,31 @@ void printtype(gint32 type) {
     case TYPE_ACKNOWLEDGE:
       printf("type : Acknowledge\n");
       break;
+    case TYPE_CHANNEL_LIST:
+      printf("type : Channel list\n");
+      break;
+    default:
+      printf("type : (unknown) 0x%x\n", type);
   }
 }
 
-
-
+struct server_info * si;
+struct channel_list * chl;
+int ack_counter = 1;
 
 void receive(int sockfd, struct sockaddr_in * servaddr) {
   int n;
-  struct server_info * si;
+/*  struct server_info * si;*/
+/*  struct channel_list * chl;*/
+
+/*  int ack_counter = 1;*/
 
   guchar data[10000];
   n = recvfrom(sockfd, data, 10000, 0, NULL, NULL);
   printf("%i char received\n", n);
-  printf("packet type : %x\n", *(gint32 *)data);
+/*  printf("packet type : %x\n", *(gint32 *)data);*/
   printtype(*(gint32 *)data);
+
 
 
   switch(*((gint32 *) data)) {
@@ -55,9 +65,14 @@ void receive(int sockfd, struct sockaddr_in * servaddr) {
       send_message2(si->private_id, si->public_id, sockfd, (struct sockaddr *)servaddr);
       receive(sockfd, servaddr);
       break;
-
     case TYPE_ACKNOWLEDGE:
-
+      receive(sockfd, servaddr);
+      break;
+    case TYPE_CHANNEL_LIST:
+      chl = decode_channel_list(data);
+      print_channel_list(chl);
+      send_acknowledge(si->private_id, si->public_id, ack_counter++, sockfd, (struct sockaddr *)servaddr);
+      receive(sockfd, servaddr);
       break;
   }
 }

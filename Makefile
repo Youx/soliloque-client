@@ -1,8 +1,9 @@
-CFLAGS = `pkg-config --cflags glib-2.0`
+CFLAGS = `pkg-config --cflags glib-2.0` -ggdb
 LDFLAGS = `pkg-config --libs glib-2.0` -lm
 COPTS = -Wall -ansi
 MODULES = crc.o highlevel.o test_lowlevel.o main.o \
-          acknowledge.o connection_request.o message2.o server_info.o
+          acknowledge.o connection_request.o message2.o \
+	  channel_list.o server_info.o player_list.o
 
 default: $(MODULES)
 	gcc $(LDFLAGS) $(COPTS) -o test $(MODULES)

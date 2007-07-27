@@ -20,7 +20,7 @@
 
 
 
-void send_acknowledge(guint32 private_id, guint32 public_id, int s, const struct sockaddr * to);
+void send_acknowledge(guint32 private_id, guint32 public_id, guint32 counter, int s, const struct sockaddr * to);
 
 
 #endif
