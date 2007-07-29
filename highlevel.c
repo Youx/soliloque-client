@@ -14,7 +14,7 @@
 #include "server_info.h"
 #include "acknowledge.h"
 #include "channel_list.h"
-
+#include "player_list.h"
 
 
 void printtype(gint32 type) {
@@ -31,6 +31,9 @@ void printtype(gint32 type) {
     case TYPE_CHANNEL_LIST:
       printf("type : Channel list\n");
       break;
+    case TYPE_PLAYER_LIST:
+      printf("type : Player list\n");
+      break;
     default:
       printf("type : (unknown) 0x%x\n", type);
   }
@@ -38,6 +41,7 @@ void printtype(gint32 type) {
 
 struct server_info * si;
 struct channel_list * chl;
+struct player_list * pll;
 int ack_counter = 1;
 
 void receive(int sockfd, struct sockaddr_in * servaddr) {
@@ -71,6 +75,12 @@ void receive(int sockfd, struct sockaddr_in * servaddr) {
     case TYPE_CHANNEL_LIST:
       chl = decode_channel_list(data);
       print_channel_list(chl);
+      send_acknowledge(si->private_id, si->public_id, ack_counter++, sockfd, (struct sockaddr *)servaddr);
+      receive(sockfd, servaddr);
+      break;
+    case TYPE_PLAYER_LIST:
+      pll = decode_player_list(data);
+      print_player_list(pll);
       send_acknowledge(si->private_id, si->public_id, ack_counter++, sockfd, (struct sockaddr *)servaddr);
       receive(sockfd, servaddr);
       break;
