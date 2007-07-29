@@ -9,10 +9,10 @@ struct message1a {
   guint32 checksum;
 
   guint8 servername_size;
-  gchar servername[29];
+  char servername[29];
 
   guint8 machine_size;
-  gchar machine[29];
+  char machine[29];
 
   guint8 data1[92];
 
@@ -20,7 +20,7 @@ struct message1a {
   guint32 public_id;
 
   guint8 welcome_size;
-  gchar welcome[255];
+  char welcome[255];
 };
 
 

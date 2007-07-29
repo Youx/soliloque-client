@@ -19,8 +19,8 @@ char codecs[13][12] = {
 
 static void print_channel(struct channel * ch) {
   printf("  id: %i\n", ch->id);
-  printf("  name: %s\n", ch->name);
-  printf("  flags: ");
+  printf("    name: %s\n", ch->name);
+  printf("    flags: ");
   if(ch->flags & CHANNEL_FLAG_UNREGISTERED)
     printf("U");
   else
@@ -36,11 +36,10 @@ static void print_channel(struct channel * ch) {
     printf("D");
   printf("\n");
 
-  printf("  codec: %s\n", codecs[ch->codec]);
-  printf("  max users : %i\n", ch->max_users);
-  printf("  topic: %s\n", ch->topic);
-  printf("  desc: %s\n", ch->desc);
-  printf("======\n");
+  printf("    codec: %s\n", codecs[ch->codec]);
+  printf("    max users : %i\n", ch->max_users);
+  printf("    topic: %s\n", ch->topic);
+  printf("    desc: %s\n", ch->desc);
 }
 
 void print_channel_list(struct channel_list * chl) {

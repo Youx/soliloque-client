@@ -8,7 +8,7 @@ struct message2 {
   guint32 empty;
   guint32 checksum;
 
-  guchar data [96];
+  unsigned char data [96];
 };
 
 

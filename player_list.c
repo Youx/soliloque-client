@@ -24,16 +24,16 @@ static void * decode_player(void * data, struct player * pl) {
   ptr = (guint8 *)ptr +1;
 
   strncpy(pl->name, ptr, len);
-  ptr = (gchar*)ptr + 29;
+  ptr = (char*)ptr + 29;
 
   return ptr;
 }
 
 void print_player(struct player * pl) {
   printf("  id: %i\n", pl->public_id);
-  printf("  name: %s\n", pl->name);
+  printf("    name: %s\n", pl->name);
 
-  printf("  global flags: ");
+  printf("    global flags: ");
   if(pl->global_flags & GLOBAL_FLAG_SERVERADMIN)
     printf("SA, ");
   if(pl->global_flags & GLOBAL_FLAG_ALLOWREG)
@@ -46,7 +46,7 @@ void print_player(struct player * pl) {
     printf("U\n");
   }
 
-  printf("  channel privileges: ");
+  printf("    channel privileges: ");
   if(pl->chan_privileges & CHANNEL_PRIV_CHANADMIN)
     printf("CA ");
   if(pl->chan_privileges & CHANNEL_PRIV_OP)
@@ -59,7 +59,7 @@ void print_player(struct player * pl) {
     printf("AV ");
   printf("\n");
 
-  printf("  player attributes: ");
+  printf("    player attributes: ");
   if(pl->player_attributes & PL_ATTR_BLOCK_WHISPER)
     printf("block whispers ");
   if(pl->player_attributes & PL_ATTR_AWAY)

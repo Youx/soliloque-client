@@ -25,26 +25,26 @@ struct message1 {
   guint32 checksum;
 
   guint8 client_size;
-  gchar client[29];
+  char client[29];
 
   guint8 machine_size;
-  gchar machine[29];
+  char machine[29];
 
   guint32 data1;
   guint32 data2;
 
   guint8 assign_nick;
 
-  guchar always1;
+  guint8 always1;
 
   guint8 login_size;
-  gchar login[29];
+  char login[29];
 
   guint8 pass_size;
-  gchar pass[29];
+  char pass[29];
 
   guint8 nick_size;
-  gchar nick[29];
+  char nick[29];
 };
 
 /* No need to access it from outside */

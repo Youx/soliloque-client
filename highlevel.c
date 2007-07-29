@@ -34,6 +34,7 @@ void printtype(gint32 type) {
     case TYPE_PLAYER_LIST:
       printf("type : Player list\n");
       break;
+      
     default:
       printf("type : (unknown) 0x%x\n", type);
   }
@@ -51,7 +52,7 @@ void receive(int sockfd, struct sockaddr_in * servaddr) {
 
 /*  int ack_counter = 1;*/
 
-  guchar data[10000];
+  unsigned char data[10000];
   n = recvfrom(sockfd, data, 10000, 0, NULL, NULL);
   printf("%i char received\n", n);
 /*  printf("packet type : %x\n", *(gint32 *)data);*/
@@ -81,6 +82,10 @@ void receive(int sockfd, struct sockaddr_in * servaddr) {
     case TYPE_PLAYER_LIST:
       pll = decode_player_list(data);
       print_player_list(pll);
+      send_acknowledge(si->private_id, si->public_id, ack_counter++, sockfd, (struct sockaddr *)servaddr);
+      receive(sockfd, servaddr);
+      break;
+    case (GUINT32_TO_LE(0x0008bef0)):
       send_acknowledge(si->private_id, si->public_id, ack_counter++, sockfd, (struct sockaddr *)servaddr);
       receive(sockfd, servaddr);
       break;
