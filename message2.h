@@ -1,7 +1,7 @@
 #ifndef __MESSAGE2_H__
 #define __MESSAGE2_H__
 
-#include <glib.h>
+#include "compat.h"
 #include <stdlib.h>
 #include "crc.h"
 

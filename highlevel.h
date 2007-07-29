@@ -8,7 +8,7 @@
 #define __HIGH_LEVEL_H__
 
 
-#include <glib.h>
+#include "compat.h"
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>

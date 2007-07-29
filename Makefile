@@ -6,7 +6,8 @@ LDFLAGS = -lm
 COPTS = -Wall -ansi
 MODULES = crc.o highlevel.o test_lowlevel.o main.o \
           acknowledge.o connection_request.o message2.o \
-	  channel_list.o server_info.o player_list.o
+	  channel_list.o server_info.o player_list.o \
+	  keepalive.o
 
 default: $(MODULES)
 	gcc $(LDFLAGS) $(COPTS) -o test $(MODULES)

@@ -10,7 +10,7 @@
 #ifndef __SERVER_INFO_H__
 #define __SERVER_INFO_H__
 
-#include <glib.h>
+#include "compat.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>

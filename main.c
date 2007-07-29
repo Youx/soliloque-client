@@ -6,7 +6,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-#include <glib.h>
+#include "compat.h"
 
 #include "highlevel.h"
 #include "connection_request.h"

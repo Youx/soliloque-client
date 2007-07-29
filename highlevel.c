@@ -7,7 +7,9 @@
 #include <strings.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <glib.h>
+#include <unistd.h>
+
+#include "compat.h"
 
 #include "connection_request.h"
 #include "message2.h"
@@ -15,6 +17,7 @@
 #include "acknowledge.h"
 #include "channel_list.h"
 #include "player_list.h"
+#include "keepalive.h"
 
 
 void printtype(gint32 type) {
@@ -44,18 +47,14 @@ struct server_info * si;
 struct channel_list * chl;
 struct player_list * pll;
 int ack_counter = 1;
+int keepalive_counter = 2;
 
 void receive(int sockfd, struct sockaddr_in * servaddr) {
   int n;
-/*  struct server_info * si;*/
-/*  struct channel_list * chl;*/
-
-/*  int ack_counter = 1;*/
 
   unsigned char data[10000];
   n = recvfrom(sockfd, data, 10000, 0, NULL, NULL);
   printf("%i char received\n", n);
-/*  printf("packet type : %x\n", *(gint32 *)data);*/
   printtype(*(gint32 *)data);
 
 
@@ -87,7 +86,17 @@ void receive(int sockfd, struct sockaddr_in * servaddr) {
       break;
     case (GUINT32_TO_LE(0x0008bef0)):
       send_acknowledge(si->private_id, si->public_id, ack_counter++, sockfd, (struct sockaddr *)servaddr);
+      send_keepalive(si->private_id, si->public_id, keepalive_counter++, sockfd, (struct sockaddr *)servaddr);
       receive(sockfd, servaddr);
       break;
+    case (GUINT32_TO_LE(0x0002bef4)): /* some kind of keepalive? or maybe data? */
+      sleep(1);
+      send_keepalive(si->private_id, si->public_id, keepalive_counter++, sockfd, (struct sockaddr *)servaddr);
+      receive(sockfd, servaddr);
+      break;
+    default: /* try this to keep it alive... */
+/*      sleep(1);*/
+      send_keepalive(si->private_id, si->public_id, keepalive_counter++, sockfd, (struct sockaddr *)servaddr);
+      receive(sockfd, servaddr);
   }
 }

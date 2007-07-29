@@ -4,7 +4,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include <glib.h>
+#include "compat.h"
 
 
 void crc32_table(guint32 poly, guint32 * table) {

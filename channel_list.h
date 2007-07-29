@@ -1,7 +1,7 @@
 #ifndef __CHANNEL_LIST_H__
 #define __CHANNEL_LIST_H__
 
-#include <glib.h>
+#include "compat.h"
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>

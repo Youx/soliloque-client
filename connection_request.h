@@ -11,7 +11,7 @@
 #define __CONNECTION_REQUEST_H__
 
 
-#include <glib.h>
+#include "compat.h"
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <strings.h>

@@ -10,7 +10,7 @@
 #ifndef __ACKNOWLEDGE_H__
 #define __ACKNOWLEDGE_H__
 
-#include <glib.h>
+#include "compat.h"
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
