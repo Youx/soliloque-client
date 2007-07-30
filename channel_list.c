@@ -58,7 +58,7 @@ static void destroy_channel(struct channel * ch) {
   free(ch);
 }
 
-static void destroy_channel_list(struct channel_list * ch) {
+void destroy_channel_list(struct channel_list * ch) {
   int i;
   for(i=0 ; i < ch->size ; i++) {
     destroy_channel(& ch->channels[i]);
