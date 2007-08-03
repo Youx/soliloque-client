@@ -7,7 +7,7 @@
 #include "compat.h"
 
 
-void crc32_table(guint32 poly, guint32 * table) {
+void crc32_table(uint32_t poly, uint32_t * table) {
   int i, j;
 
   for(i = 0; i < 256; i++) {
@@ -21,14 +21,14 @@ void crc32_table(guint32 poly, guint32 * table) {
   }     
 }
 
-guint32 crc_32(void * str, int length, guint32 poly) {
-  guint32 table[256];
+uint32_t crc_32(void * str, int length, uint32_t poly) {
+  uint32_t table[256];
   int i;
   crc32_table(poly, table);
-  guint32 crc = 0xFFFFFFFF;
+  uint32_t crc = 0xFFFFFFFF;
 
   for(i = 0 ; i < length ; i++) {
-    crc = ( crc >> 8) ^ table[(((guint8 *)str)[i] ^ crc) & 0x000000FF];
+    crc = ( crc >> 8) ^ table[(((uint8_t *)str)[i] ^ crc) & 0x000000FF];
   }
   return ~crc;
 }

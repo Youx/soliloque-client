@@ -70,19 +70,19 @@ void * decode_channel(void * data, struct channel * ch) {
   void * ptr = data;
   int len;
 
-  ch->id = GUINT32_FROM_LE(* (guint32 *)ptr);
-  ptr = (guint32 *)ptr +1;
+  ch->id = GUINT32_FROM_LE(* (uint32_t *)ptr);
+  ptr = (uint32_t *)ptr +1;
 
-  ch->flags = GUINT16_FROM_LE(* (guint16 *)ptr);
-  ptr = (guint16 *)ptr +1;
+  ch->flags = GUINT16_FROM_LE(* (uint16_t *)ptr);
+  ptr = (uint16_t *)ptr +1;
 
-  ch->codec = GUINT16_FROM_LE(* (guint16 *)ptr);
-  ptr = (guint16 *)ptr +1;
-  ptr = (guint32 *)ptr +1; /* jump over ffffffff */
-  ch->sort_order = GUINT16_FROM_LE(* (guint16 *)ptr);
-  ptr = (guint16 *)ptr +1;
-  ch->max_users = GUINT16_FROM_LE(* (guint16 *)ptr);
-  ptr = (guint16 *)ptr +1;
+  ch->codec = GUINT16_FROM_LE(* (uint16_t *)ptr);
+  ptr = (uint16_t *)ptr +1;
+  ptr = (uint32_t *)ptr +1; /* jump over ffffffff */
+  ch->sort_order = GUINT16_FROM_LE(* (uint16_t *)ptr);
+  ptr = (uint16_t *)ptr +1;
+  ch->max_users = GUINT16_FROM_LE(* (uint16_t *)ptr);
+  ptr = (uint16_t *)ptr +1;
   
   len = strlen((char *)ptr);
   ch->name = (char *)calloc(len+1, 1);
@@ -111,10 +111,10 @@ struct channel_list * decode_channel_list(void * data) {
   chl = (struct channel_list *)calloc(sizeof(struct channel_list), 1);
 
   /* skip the header */
-  ptr = (guint32 *) ptr + 6;
+  ptr = (uint32_t *) ptr + 6;
 
-  chl->size = GUINT32_FROM_LE(* ((guint32 *) ptr));
-  ptr = (guint32 *) ptr +1;
+  chl->size = GUINT32_FROM_LE(* ((uint32_t *) ptr));
+  ptr = (uint32_t *) ptr +1;
   
   chl->channels = calloc(sizeof(struct channel), chl->size);
 

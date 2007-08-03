@@ -17,33 +17,33 @@
 
 
 struct message1 {
-  guint32 function;
-  guint32 private_id;
-  guint32 public_id;
-  guint32 counter;
+  uint32_t function;
+  uint32_t private_id;
+  uint32_t public_id;
+  uint32_t counter;
 
-  guint32 checksum;
+  uint32_t checksum;
 
-  guint8 client_size;
+  uint8_t client_size;
   char client[29];
 
-  guint8 machine_size;
+  uint8_t machine_size;
   char machine[29];
 
-  guint32 data1;
-  guint32 data2;
+  uint32_t data1;
+  uint32_t data2;
 
-  guint8 assign_nick;
+  uint8_t assign_nick;
 
-  guint8 always1;
+  uint8_t always1;
 
-  guint8 login_size;
+  uint8_t login_size;
   char login[29];
 
-  guint8 pass_size;
+  uint8_t pass_size;
   char pass[29];
 
-  guint8 nick_size;
+  uint8_t nick_size;
   char nick[29];
 };
 
@@ -61,7 +61,7 @@ static struct message1 * encode_connection_request(struct connection_request * r
   /* cut machine if too long */
   if(strlen(req->machine) > 29)
     req->machine[29] = '\0';
-  msg->machine_size = (guint8)strlen(req->machine);
+  msg->machine_size = (uint8_t)strlen(req->machine);
   memcpy(msg->machine, req->machine, strlen(req->machine));
 
   msg->data1 = GUINT32_TO_LE(0x02000000);
@@ -73,19 +73,19 @@ static struct message1 * encode_connection_request(struct connection_request * r
   /* Insert login */
   if(strlen(req->login) > 29)
     req->login[29] = '\0';
-  msg->login_size = (guint8)strlen(req->login);
+  msg->login_size = (uint8_t)strlen(req->login);
   memcpy(msg->login, req->login, strlen(req->login));
 
   /* Insert password */
   if(strlen(req->pass) > 29)
     req->pass[29] = '\0';
-  msg->pass_size = (guint8)strlen(req->pass);
+  msg->pass_size = (uint8_t)strlen(req->pass);
   memcpy(msg->pass, req->pass, strlen(req->pass));
 
   /* Insert nick */
   if(strlen(req->nick) > 29)
     req->nick[29] = '\0';
-  msg->nick_size = (guint8)strlen(req->nick);
+  msg->nick_size = (uint8_t)strlen(req->nick);
   memcpy(msg->nick, req->nick, strlen(req->nick));
 
   msg->checksum = GINT32_TO_LE(crc_32(msg, sizeof(struct message1), 0xEDB88320));
@@ -101,7 +101,7 @@ int connect_to(struct connection_request * req, int * sockfd, struct sockaddr_in
   bzero(servaddr, sizeof(*servaddr));
   servaddr->sin_family = AF_INET;
 /*  servaddr->sin_addr.s_addr = inet_addr("127.0.0.1");*/
-  servaddr->sin_addr.s_addr = inet_addr("88.191.17.171");
+  servaddr->sin_addr.s_addr = inet_addr("127.0.0.1");
   servaddr->sin_port = htons(8767);
 
   msg1 = encode_connection_request(req);

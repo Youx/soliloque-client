@@ -34,11 +34,11 @@
 
 
 struct channel {
-  guint32 id;
-  guint16 flags;
-  guint16 codec;
-  guint16 sort_order;
-  guint16 max_users;
+  uint32_t id;
+  uint16_t flags;
+  uint16_t codec;
+  uint16_t sort_order;
+  uint16_t max_users;
   char * name;
   char * topic;
   char * desc;
@@ -46,7 +46,7 @@ struct channel {
 
 struct channel_list {
   struct channel * channels;
-  guint32 size;
+  uint32_t size;
 };
 
 struct channel_list * decode_channel_list(void * data);

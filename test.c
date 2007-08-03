@@ -9,17 +9,15 @@
 #include <speex/speex.h>
 
 
-#define FRAME_SIZE 500
+#define FRAME_SIZE 8000
 
-
-
-int main(){
+void decode(int header) {
   FILE * fin = fopen("audiopacket2.spx", "r");
   FILE * fout = fopen("decoded_audio.raw", "w");
   int i;
   short out[FRAME_SIZE];
   float output[FRAME_SIZE];
-  char cbits[331-24];
+  char cbits[331-20];
   int nbBytes;
 
   SpeexBits bits;
@@ -33,9 +31,9 @@ int main(){
       break;
 
     /* on lit 307 octets (un paquet) vers cbits */
-    fread(cbits, 1, 331-24, fin);
+    fread(cbits, 1, 331-20, fin);
     /* on le copie vers une structure bit-stream */
-    speex_bits_read_from(&bits, cbits, 331-24);
+    speex_bits_read_from(&bits, cbits+header, 331-20-header);
     /* on decode */
     speex_decode(state, &bits, output);
 
@@ -44,6 +42,9 @@ int main(){
 
     fwrite(out, sizeof(short), FRAME_SIZE, fout);
   }
+}
 
+int main(int argc, char ** argv){
+  decode(atoi(argv[1]));
   return 0;
 }

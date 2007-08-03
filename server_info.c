@@ -2,24 +2,24 @@
 
 
 struct message1a {
-  guint32 function;
-  guint32 useless_client_id[2];
-  guint32 counter;
+  uint32_t function;
+  uint32_t useless_client_id[2];
+  uint32_t counter;
 
-  guint32 checksum;
+  uint32_t checksum;
 
-  guint8 servername_size;
+  uint8_t servername_size;
   char servername[29];
 
-  guint8 machine_size;
+  uint8_t machine_size;
   char machine[29];
 
-  guint8 data1[92];
+  uint8_t data1[92];
 
-  guint32 private_id;
-  guint32 public_id;
+  uint32_t private_id;
+  uint32_t public_id;
 
-  guint8 welcome_size;
+  uint8_t welcome_size;
   char welcome[255];
 };
 

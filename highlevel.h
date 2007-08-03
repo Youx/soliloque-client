@@ -14,6 +14,15 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
+#include "connection_request.h"
+#include "message2.h"
+#include "server_info.h"
+#include "acknowledge.h"
+#include "channel_list.h"
+#include "player_list.h"
+#include "keepalive.h"
+#include "toolbox.h"
+#include "decoder.h"
 
 void receive(int sockfd, struct sockaddr_in * servaddr);
 

@@ -33,7 +33,7 @@ struct connection_request {
 	char * login;
 	char * pass;
 	char * nick;
-	guint8 assign_nick;
+	uint8_t assign_nick;
 };
 
 

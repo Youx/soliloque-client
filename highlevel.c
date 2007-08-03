@@ -1,38 +1,8 @@
 #include "highlevel.h"
 
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <strings.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include "compat.h"
 
-#include "connection_request.h"
-#include "message2.h"
-#include "server_info.h"
-#include "acknowledge.h"
-#include "channel_list.h"
-#include "player_list.h"
-#include "keepalive.h"
 
-void dump(void * str, int len, char * filename) {
-  int fd = open(filename, O_RDWR|O_CREAT|O_TRUNC, S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
-  write(fd, str, len);
-  close(fd);
-}
-
-void append(void * str, int len, char * filename) {
-  int fd = open(filename, O_APPEND|O_RDWR|O_CREAT, S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
-  write(fd, str, len);
-  close(fd);
-}
-
-void printtype(gint32 type) {
+void printtype(int32_t type) {
   switch(type) {
     case TYPE_CONNECTION_REQUEST:
       printf("type : Connection Request\n");
@@ -72,9 +42,9 @@ void receive(int sockfd, struct sockaddr_in * servaddr) {
     bzero(data, 10000);
     n = recvfrom(sockfd, data, 10000, 0, NULL, NULL);
 /*    printf("%i char received\n", n);*/
-    printtype(*(gint32 *)data);
+    printtype(*(int32_t *)data);
 
-    switch(*((gint32 *) data)) {
+    switch(*((int32_t *) data)) {
       case TYPE_SERVER_INFO:
 	si = decode_server_info( (struct message1a *)data);
 	print_server_info(si);
@@ -101,9 +71,11 @@ void receive(int sockfd, struct sockaddr_in * servaddr) {
 	send_keepalive(si->private_id, si->public_id, keepalive_counter++, sockfd, (struct sockaddr *)servaddr);
 	break;
       case GUINT32_TO_LE(0xc00bef3): /* audio */
+      case GUINT32_TO_LE(0x900bef3):
 	/* dump(data, n, "audiopacket.dat"); */
-	append(data+24, n-24, "audiopacket2.spx");
-	send_keepalive(si->private_id, si->public_id, keepalive_counter++, sockfd, (struct sockaddr *)servaddr);
+	/*append(data+20, n-20, "audiopacket2.spx");*/
+	decode_audio_packet(data);
+	/*send_keepalive(si->private_id, si->public_id, keepalive_counter++, sockfd, (struct sockaddr *)servaddr);*/
 	/*exit(0);*/
       default: /* try this to keep it alive... */
 	send_keepalive(si->private_id, si->public_id, keepalive_counter++, sockfd, (struct sockaddr *)servaddr);

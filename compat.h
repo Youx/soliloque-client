@@ -2,50 +2,49 @@
 #define __GLIB_H__
 
 #include <stdint.h>
-#include <endian.h>
 
-typedef uint8_t guint8;
-typedef int8_t gint8;
-typedef uint16_t guint16;
-typedef int16_t gint16;
-typedef uint32_t guint32;
-typedef int32_t gint32;
+#ifdef APPLE
+#include <machine/endian.h>
+#else
+#include <endian.h>
+#endif
+
 
 #define G_BYTE_ORDER BYTE_ORDER
 
-#define GUINT16_SWAP_LE_BE_CONSTANT(val)        ((guint16) ( \
-    (guint16) ((guint16) (val) >> 8) |  \
-    (guint16) ((guint16) (val) << 8)))
+#define GUINT16_SWAP_LE_BE_CONSTANT(val)        ((uint16_t) ( \
+    (uint16_t) ((uint16_t) (val) >> 8) |  \
+    (uint16_t) ((uint16_t) (val) << 8)))
 
-#define GUINT32_SWAP_LE_BE_CONSTANT(val)        ((guint32) ( \
-    (((guint32) (val) & (guint32) 0x000000ffU) << 24) | \
-    (((guint32) (val) & (guint32) 0x0000ff00U) <<  8) | \
-    (((guint32) (val) & (guint32) 0x00ff0000U) >>  8) | \
-    (((guint32) (val) & (guint32) 0xff000000U) >> 24)))
+#define GUINT32_SWAP_LE_BE_CONSTANT(val)        ((uint32_t) ( \
+    (((uint32_t) (val) & (uint32_t) 0x000000ffU) << 24) | \
+    (((uint32_t) (val) & (uint32_t) 0x0000ff00U) <<  8) | \
+    (((uint32_t) (val) & (uint32_t) 0x00ff0000U) >>  8) | \
+    (((uint32_t) (val) & (uint32_t) 0xff000000U) >> 24)))
 
 #if BYTE_ORDER == LITTLE_ENDIAN
 
-#define GINT16_TO_LE(val)	((gint16) (val))
-#define GUINT16_TO_LE(val)	((guint16) (val))
-#define GINT16_TO_BE(val)       ((gint16) GUINT16_SWAP_LE_BE (val))
+#define GINT16_TO_LE(val)	((int16_t) (val))
+#define GUINT16_TO_LE(val)	((uint16_t) (val))
+#define GINT16_TO_BE(val)       ((int16_t) GUINT16_SWAP_LE_BE (val))
 #define GUINT16_TO_BE(val)      (GUINT16_SWAP_LE_BE (val))
 
-#define GINT32_TO_LE(val)       ((gint32) (val))
-#define GUINT32_TO_LE(val)      ((guint32) (val))
-#define GINT32_TO_BE(val)       ((gint32) GUINT32_SWAP_LE_BE (val))
+#define GINT32_TO_LE(val)       ((int32_t) (val))
+#define GUINT32_TO_LE(val)      ((uint32_t) (val))
+#define GINT32_TO_BE(val)       ((int32_t) GUINT32_SWAP_LE_BE (val))
 #define GUINT32_TO_BE(val)      (GUINT32_SWAP_LE_BE (val))
 
 #else
 
-#define GINT16_TO_LE(val)	((gint16) GUINT16_SWAP_LE_BE (val))
+#define GINT16_TO_LE(val)	((int16_t) GUINT16_SWAP_LE_BE (val))
 #define GUINT16_TO_LE(val)	(GUINT16_SWAP_LE_BE (val))
-#define GINT16_TO_BE(val)       ((gint16) (val))
-#define GUINT16_TO_BE(val)      ((guint16) (val))
+#define GINT16_TO_BE(val)       ((int16_t) (val))
+#define GUINT16_TO_BE(val)      ((uint16_t) (val))
 
-#define GINT32_TO_LE(val)       ((gint32) GUINT32_SWAP_LE_BE (val))
+#define GINT32_TO_LE(val)       ((int32_t) GUINT32_SWAP_LE_BE (val))
 #define GUINT32_TO_LE(val)      (GUINT32_SWAP_LE_BE (val))
-#define GINT32_TO_BE(val)       ((gint32) (val))
-#define GUINT32_TO_BE(val)      ((guint32) (val))
+#define GINT32_TO_BE(val)       ((int32_t) (val))
+#define GUINT32_TO_BE(val)      ((uint32_t) (val))
 
 
 #endif
@@ -56,7 +55,7 @@ typedef int32_t gint32;
 #  if defined (__i386__)
 #    define GUINT16_SWAP_LE_BE_IA32(val) \
        (__extension__						\
-	({ register guint16 __v, __x = ((guint16) (val));	\
+	({ register uint16_t __v, __x = ((uint16_t) (val));	\
 	   if (__builtin_constant_p (__x))			\
 	     __v = GUINT16_SWAP_LE_BE_CONSTANT (__x);		\
 	   else							\
@@ -70,7 +69,7 @@ typedef int32_t gint32;
 	&& !defined (__pentiumpro__) && !defined (__pentium4__)
 #       define GUINT32_SWAP_LE_BE_IA32(val) \
 	  (__extension__					\
-	   ({ register guint32 __v, __x = ((guint32) (val));	\
+	   ({ register uint32_t __v, __x = ((uint32_t) (val));	\
 	      if (__builtin_constant_p (__x))			\
 		__v = GUINT32_SWAP_LE_BE_CONSTANT (__x);	\
 	      else						\
@@ -84,7 +83,7 @@ typedef int32_t gint32;
 #    else /* 486 and higher has bswap */
 #       define GUINT32_SWAP_LE_BE_IA32(val) \
 	  (__extension__					\
-	   ({ register guint32 __v, __x = ((guint32) (val));	\
+	   ({ register uint32_t __v, __x = ((uint32_t) (val));	\
 	      if (__builtin_constant_p (__x))			\
 		__v = GUINT32_SWAP_LE_BE_CONSTANT (__x);	\
 	      else						\
@@ -99,7 +98,7 @@ typedef int32_t gint32;
 #  elif defined (__ia64__)
 #    define GUINT16_SWAP_LE_BE_IA64(val) \
        (__extension__						\
-	({ register guint16 __v, __x = ((guint16) (val));	\
+	({ register uint16_t __v, __x = ((uint16_t) (val));	\
 	   if (__builtin_constant_p (__x))			\
 	     __v = GUINT16_SWAP_LE_BE_CONSTANT (__x);		\
 	   else							\
@@ -110,7 +109,7 @@ typedef int32_t gint32;
 	    __v; }))
 #    define GUINT32_SWAP_LE_BE_IA64(val) \
        (__extension__						\
-	 ({ register guint32 __v, __x = ((guint32) (val));	\
+	 ({ register uint32_t __v, __x = ((uint32_t) (val));	\
 	    if (__builtin_constant_p (__x))			\
 	      __v = GUINT32_SWAP_LE_BE_CONSTANT (__x);		\
 	    else						\
@@ -124,7 +123,7 @@ typedef int32_t gint32;
 #  elif defined (__x86_64__)
 #    define GUINT32_SWAP_LE_BE_X86_64(val) \
        (__extension__						\
-	 ({ register guint32 __v, __x = ((guint32) (val));	\
+	 ({ register uint32_t __v, __x = ((uint32_t) (val));	\
 	    if (__builtin_constant_p (__x))			\
 	      __v = GUINT32_SWAP_LE_BE_CONSTANT (__x);		\
 	    else						\
@@ -144,14 +143,14 @@ typedef int32_t gint32;
 #  define GUINT32_SWAP_LE_BE(val) (GUINT32_SWAP_LE_BE_CONSTANT (val))
 #endif /* generic */
 
-#define GUINT16_SWAP_LE_PDP(val)	((guint16) (val))
+#define GUINT16_SWAP_LE_PDP(val)	((uint16_t) (val))
 #define GUINT16_SWAP_BE_PDP(val)	(GUINT16_SWAP_LE_BE (val))
-#define GUINT32_SWAP_LE_PDP(val)	((guint32) ( \
-    (((guint32) (val) & (guint32) 0x0000ffffU) << 16) | \
-    (((guint32) (val) & (guint32) 0xffff0000U) >> 16)))
-#define GUINT32_SWAP_BE_PDP(val)	((guint32) ( \
-    (((guint32) (val) & (guint32) 0x00ff00ffU) << 8) | \
-    (((guint32) (val) & (guint32) 0xff00ff00U) >> 8)))
+#define GUINT32_SWAP_LE_PDP(val)	((uint32_t) ( \
+    (((uint32_t) (val) & (uint32_t) 0x0000ffffU) << 16) | \
+    (((uint32_t) (val) & (uint32_t) 0xffff0000U) >> 16)))
+#define GUINT32_SWAP_BE_PDP(val)	((uint32_t) ( \
+    (((uint32_t) (val) & (uint32_t) 0x00ff00ffU) << 8) | \
+    (((uint32_t) (val) & (uint32_t) 0xff00ff00U) >> 8)))
 
 /* The G*_TO_?E() macros are defined in glibconfig.h.
  * The transformation is symmetric, so the FROM just maps to the TO.

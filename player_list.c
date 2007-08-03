@@ -2,26 +2,26 @@
 
 static void * decode_player(void * data, struct player * pl) {
   void * ptr = data;
-  guint8 len;
+  uint8_t len;
 
   /* Retreive the public ID */
-  pl->public_id = GUINT32_FROM_LE(*(guint32 *) ptr);
-  ptr = (guint32 *)ptr + 1;
+  pl->public_id = GUINT32_FROM_LE(*(uint32_t *) ptr);
+  ptr = (uint32_t *)ptr + 1;
   /* Retreive the channel ID */
-  pl->channel_id = GUINT32_FROM_LE(*(guint32 *) ptr);
-  ptr = (guint32 *)ptr + 1;
+  pl->channel_id = GUINT32_FROM_LE(*(uint32_t *) ptr);
+  ptr = (uint32_t *)ptr + 1;
   /* Retreive the channel privileges */
-  pl->chan_privileges = GUINT16_FROM_LE(*(guint16 *) ptr);
-  ptr = (guint16 *)ptr + 1;
+  pl->chan_privileges = GUINT16_FROM_LE(*(uint16_t *) ptr);
+  ptr = (uint16_t *)ptr + 1;
   /* Retreive the channel privileges */
-  pl->global_flags = GUINT16_FROM_LE(*(guint16 *) ptr);
-  ptr = (guint16 *)ptr + 1;
+  pl->global_flags = GUINT16_FROM_LE(*(uint16_t *) ptr);
+  ptr = (uint16_t *)ptr + 1;
   /* Retreive the player attributes */
-  pl->player_attributes = GUINT16_FROM_LE(*(guint16 *) ptr);
-  ptr = (guint16 *)ptr + 1;
+  pl->player_attributes = GUINT16_FROM_LE(*(uint16_t *) ptr);
+  ptr = (uint16_t *)ptr + 1;
 
-  len = *(guint8 *)ptr;
-  ptr = (guint8 *)ptr +1;
+  len = *(uint8_t *)ptr;
+  ptr = (uint8_t *)ptr +1;
 
   strncpy(pl->name, ptr, len);
   ptr = (char*)ptr + 29;
@@ -86,11 +86,11 @@ struct player_list * decode_player_list(void * data) {
   void * ptr = data;
   struct player_list * pll = (struct player_list *)calloc(sizeof(struct player_list), 1);
 
-  ptr = (guint32 *)ptr + 6;
+  ptr = (uint32_t *)ptr + 6;
 
-  pll->size = GUINT32_FROM_LE(*(guint32 *)ptr);
+  pll->size = GUINT32_FROM_LE(*(uint32_t *)ptr);
   pll->players = (struct player *)calloc(sizeof(struct player), pll->size);
-  ptr = (guint32 *)ptr +1;
+  ptr = (uint32_t *)ptr +1;
 
   for(i=0 ; i<pll->size ; i++) {
     ptr = decode_player(ptr, & pll->players[i]);

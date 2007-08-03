@@ -30,19 +30,19 @@
 
 
 struct player {
-  guint32 public_id;
-  guint32 channel_id;
+  uint32_t public_id;
+  uint32_t channel_id;
 
-  guint16 chan_privileges;
-  guint16 global_flags;
-  guint16 player_attributes;
+  uint16_t chan_privileges;
+  uint16_t global_flags;
+  uint16_t player_attributes;
 
   char name[29];
 };
 
 struct player_list {
   struct player * players;
-  guint32 size;
+  uint32_t size;
 };
 
 struct player_list * decode_player_list(void * data);

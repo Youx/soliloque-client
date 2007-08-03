@@ -1,18 +1,18 @@
 #include "message2.h"
 
 struct message2 {
-  guint32 function;
-  guint32 private_id;
-  guint32 public_id;
-  guint32 counter;
-  guint32 empty;
-  guint32 checksum;
+  uint32_t function;
+  uint32_t private_id;
+  uint32_t public_id;
+  uint32_t counter;
+  uint32_t empty;
+  uint32_t checksum;
 
   unsigned char data [96];
 };
 
 
-static struct message2 * init_message2(guint32 private_id, guint32 public_id, guint32 counter) {
+static struct message2 * init_message2(uint32_t private_id, uint32_t public_id, uint32_t counter) {
   struct message2 * msg;
   msg = (struct message2 *)calloc(1, sizeof(struct message2));
 
@@ -31,7 +31,7 @@ static void destroy_message2(struct message2 * msg) {
   free(msg);
 }
 
-void send_message2(guint32 private_id, guint32 public_id, int s, const struct sockaddr * to) {
+void send_message2(uint32_t private_id, uint32_t public_id, int s, const struct sockaddr * to) {
   struct message2 * msg;
 
   msg = init_message2(private_id, public_id, 1);

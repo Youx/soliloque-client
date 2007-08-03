@@ -12,15 +12,15 @@
 
 
 struct acknowledge {
-  guint32 function;
-  guint32 private_id;
-  guint32 public_id;
-  guint32 counter;
+  uint32_t function;
+  uint32_t private_id;
+  uint32_t public_id;
+  uint32_t counter;
 };
 
 
 
-static struct acknowledge * init_acknowledge(guint32 private_id, guint32 public_id, guint32 counter) {
+static struct acknowledge * init_acknowledge(uint32_t private_id, uint32_t public_id, uint32_t counter) {
   struct acknowledge * msg;
   msg = (struct acknowledge *)calloc(1, sizeof(struct acknowledge));
 
@@ -37,7 +37,7 @@ static void destroy_acknowledge(struct acknowledge * msg) {
   free(msg);
 }
 
-void send_acknowledge(guint32 private_id, guint32 public_id, guint32 counter, int s, const struct sockaddr * to) {
+void send_acknowledge(uint32_t private_id, uint32_t public_id, uint32_t counter, int s, const struct sockaddr * to) {
   struct acknowledge * msg;
 
   msg = init_acknowledge(private_id, public_id, counter);
