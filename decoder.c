@@ -2,61 +2,60 @@
 
 #define FRAME_SIZE 160
 
+char outfiles[5][14] = {
+  "data/out1.dat",
+  "data/out2.dat", 
+  "data/out3.dat",
+  "data/out4.dat",
+  "data/out5.dat"
+};
+
+void odd_frame_to_even(unsigned char * frame, int len) {
+  int i;
+
+  for(i=0 ; i < len ; i++) {
+    frame[i] = frame[i] << 4;
+    frame[i] |= (frame[i+1] >> 4);
+  }
+}
+
 
 void decode_audio_packet(void * input) {
-  uint8_t * ptr = input;
+  char * ptr = input;
   short out[FRAME_SIZE];
   float output[FRAME_SIZE];
 
-  uint8_t codec, size;
+  uint8_t nbframes;
 
   SpeexBits bits;
   void * state;
-  int j;
+  int j, i;
 
   /* bypass header */
   ptr+=22;
-  codec = *ptr; /* 05 */
+  nbframes = *ptr; 
   ptr++;
-  size = *ptr; /* size of frame */
-/*  ptr++;
-  ptr+=15; */
-
-  size = 62;
-  printf("Encoded frame : %i bytes\n", size);
-  dump(input, 331, "data/input_packet.dat");
-  dump(ptr, size, "data/input_speexframe.dat");
 
   state = speex_decoder_init(&speex_nb_mode);
   speex_bits_init(&bits);
   
-  /* PART I */
-  speex_bits_read_from(&bits, (char *)ptr, size);
-  speex_decode(state, &bits, output);
+  for(i=0 ; i<nbframes ; i++) {
+    if(i%2 == 1)
+      odd_frame_to_even((unsigned char *)ptr, 62);
 
-  for(j=0 ; j < FRAME_SIZE ; j++)
-    out[j] = output[j];
+    dump(ptr, 62, outfiles[i]);
+    speex_bits_read_from(&bits, ptr, 62);
+    speex_decode(state, &bits, output);
 
-  append(out, sizeof(short) * FRAME_SIZE, "data/decoded_audio.raw");
+    for(j=0 ; j < FRAME_SIZE ; j++)
+      out[j] = output[j];
 
-  /* PART II */
-  ptr = input + 0x8C;
-  speex_bits_read_from(&bits, (char *)ptr, size);
-  speex_decode(state, &bits, output);
+    append(out, sizeof(short) * FRAME_SIZE, "data/decoded_audio.raw");
 
-  for(j=0 ; j < FRAME_SIZE ; j++)
-    out[j] = output[j];
+    if(i%2 == 1)
+      ptr+=1;
 
-  append(out, sizeof(short) * FRAME_SIZE, "data/decoded_audio.raw");
-
-  /* PART III */
-/*  ptr = input + 0x107;
-  speex_bits_read_from(&bits, (char *)ptr, size);
-  speex_decode(state, &bits, output);
-
-  for(j=0 ; j < FRAME_SIZE ; j++)
-    out[j] = output[j];
-
-  append(out, sizeof(short) * FRAME_SIZE, "data/decoded_audio.raw");*/
+    ptr+=61;
+  }
 }
 

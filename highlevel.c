@@ -72,11 +72,8 @@ void receive(int sockfd, struct sockaddr_in * servaddr) {
 	break;
       case GUINT32_TO_LE(0xc00bef3): /* audio */
       case GUINT32_TO_LE(0x900bef3):
-	/* dump(data, n, "audiopacket.dat"); */
-	/*append(data+20, n-20, "audiopacket2.spx");*/
 	decode_audio_packet(data);
-	/*send_keepalive(si->private_id, si->public_id, keepalive_counter++, sockfd, (struct sockaddr *)servaddr);*/
-	/*exit(0);*/
+	break;
       default: /* try this to keep it alive... */
 	send_keepalive(si->private_id, si->public_id, keepalive_counter++, sockfd, (struct sockaddr *)servaddr);
     }
