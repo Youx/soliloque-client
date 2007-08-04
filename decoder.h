@@ -10,6 +10,9 @@
 #include <unistd.h>
 #include "compat.h"
 #include "toolbox.h"
+#include "channel_list.h"
+
+#include <stdlib.h>
 
 
 void decode_audio_packet(void * input);

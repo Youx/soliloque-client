@@ -70,8 +70,12 @@ void receive(int sockfd, struct sockaddr_in * servaddr) {
 	sleep(1);
 	send_keepalive(si->private_id, si->public_id, keepalive_counter++, sockfd, (struct sockaddr *)servaddr);
 	break;
-      case GUINT32_TO_LE(0xc00bef3): /* audio */
-      case GUINT32_TO_LE(0x900bef3):
+      case GUINT32_TO_LE(0xc00bef3): /* speex 26.4 kbps */
+      case GUINT32_TO_LE(0xb00bef3): /* speex 18.2 kbps */
+      case GUINT32_TO_LE(0xa00bef3): /* speex 15 kbps */
+      case GUINT32_TO_LE(0x900bef3): /* speex 11 kbps */
+      case GUINT32_TO_LE(0x800bef3): /* speex 8 kbps */
+      case GUINT32_TO_LE(0x700bef3): /* speex 8 kbps */
 	decode_audio_packet(data);
 	break;
       default: /* try this to keep it alive... */
