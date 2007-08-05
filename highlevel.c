@@ -19,7 +19,15 @@ void printtype(int32_t type) {
     case TYPE_PLAYER_LIST:
       printf("type : Player list\n");
       break;
-    case GUINT32_TO_LE(0xc00bef3):
+    case GUINT32_TO_LE(0x0002bef4): /* some kind of keepalive? or maybe data? */
+      printf("type : Keepalive\n");
+      break;
+    case GUINT32_TO_LE(0xc00bef3): /* speex 26.4 kbps */
+    case GUINT32_TO_LE(0xb00bef3): /* speex 18.2 kbps */
+    case GUINT32_TO_LE(0xa00bef3): /* speex 15 kbps */
+    case GUINT32_TO_LE(0x900bef3): /* speex 11 kbps */
+    case GUINT32_TO_LE(0x800bef3): /* speex 8 kbps */
+    case GUINT32_TO_LE(0x700bef3): /* speex 8 kbps */
       printf("type : Audio data\n");
       break;
     default:

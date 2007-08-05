@@ -101,7 +101,7 @@ int connect_to(struct connection_request * req, int * sockfd, struct sockaddr_in
   bzero(servaddr, sizeof(*servaddr));
   servaddr->sin_family = AF_INET;
 /*  servaddr->sin_addr.s_addr = inet_addr("127.0.0.1");*/
-  servaddr->sin_addr.s_addr = inet_addr("127.0.0.1");
+  servaddr->sin_addr.s_addr = inet_addr("88.191.17.171");
   servaddr->sin_port = htons(8767);
 
   msg1 = encode_connection_request(req);
