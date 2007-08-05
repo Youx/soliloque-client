@@ -253,6 +253,31 @@ static int16_t * decode_speex_5_950(void * input, uint8_t nbframes) {
   return out;
 }
 
+static int16_t * decode_gsm_14_8(void * input) {
+  int16_t * out = (int16_t *)calloc(FRAME_SIZE * 5, sizeof(int16_t));
+  int16_t * outptr = out;
+  unsigned char * ptr = input;
+  int i;
+  gsm handle;
+
+  ptr+=6;
+
+  handle = gsm_create();
+  for(i=0 ; i<5 ; i++) {
+    if(gsm_decode(handle, ptr, outptr)) {
+      printf("GSM ERROR...\n");
+    }
+
+    ptr+=33;
+    outptr += FRAME_SIZE;
+  }
+
+  gsm_destroy(handle);
+
+  return out;
+}
+
+
 void decode_audio_packet(void * input) {
   uint8_t nbframes;
   int16_t * out;
@@ -286,9 +311,12 @@ void decode_audio_packet(void * input) {
     case CODEC_SPEEX_7_2:
       out = decode_speex_5_950(ptr, nbframes);
       break;
-    default:
-      out = decode_junk(ptr, nbframes);
+    case CODEC_GSM_14_8:
+      out = decode_gsm_14_8(ptr);
+      break;
+/*    default:
+      out = decode_junk(ptr, nbframes);*/
   }
-  append(out, sizeof(short) * FRAME_SIZE * nbframes, "data/decoded_audio.raw");
+  append(out, sizeof(short) * FRAME_SIZE * 5, "data/decoded_audio.raw");
   free(out);
 }

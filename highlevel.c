@@ -87,6 +87,7 @@ void receive(int sockfd, struct sockaddr_in * servaddr) {
       case GUINT32_TO_LE(0x0900bef3): /* speex 11 kbps */
       case GUINT32_TO_LE(0x0800bef3): /* speex 8 kbps */
       case GUINT32_TO_LE(0x0700bef3): /* speex 8 kbps */
+      case GUINT32_TO_LE(0x0200bef3): /* gsm 14.8 kbps */
 	decode_audio_packet(data);
 	break;
       case GUINT32_TO_LE(0x0064bef0): /* player arrived */
