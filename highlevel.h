@@ -23,6 +23,8 @@
 #include "keepalive.h"
 #include "toolbox.h"
 #include "decoder.h"
+#include "new_player.h"
+
 
 void receive(int sockfd, struct sockaddr_in * servaddr);
 

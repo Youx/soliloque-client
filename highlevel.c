@@ -30,6 +30,9 @@ void printtype(int32_t type) {
     case GUINT32_TO_LE(0x700bef3): /* speex 8 kbps */
       printf("type : Audio data\n");
       break;
+    case GUINT32_TO_LE(0x0064bef0): /* new player arrived */
+      printf("type : New player\n");
+      break;
     default:
       printf("type : (unknown) 0x%x\n", type);
   }
@@ -78,13 +81,21 @@ void receive(int sockfd, struct sockaddr_in * servaddr) {
 	sleep(1);
 	send_keepalive(si->private_id, si->public_id, keepalive_counter++, sockfd, (struct sockaddr *)servaddr);
 	break;
-      case GUINT32_TO_LE(0xc00bef3): /* speex 26.4 kbps */
-      case GUINT32_TO_LE(0xb00bef3): /* speex 18.2 kbps */
-      case GUINT32_TO_LE(0xa00bef3): /* speex 15 kbps */
-      case GUINT32_TO_LE(0x900bef3): /* speex 11 kbps */
-      case GUINT32_TO_LE(0x800bef3): /* speex 8 kbps */
-      case GUINT32_TO_LE(0x700bef3): /* speex 8 kbps */
+      case GUINT32_TO_LE(0x0c00bef3): /* speex 26.4 kbps */
+      case GUINT32_TO_LE(0x0b00bef3): /* speex 18.2 kbps */
+      case GUINT32_TO_LE(0x0a00bef3): /* speex 15 kbps */
+      case GUINT32_TO_LE(0x0900bef3): /* speex 11 kbps */
+      case GUINT32_TO_LE(0x0800bef3): /* speex 8 kbps */
+      case GUINT32_TO_LE(0x0700bef3): /* speex 8 kbps */
 	decode_audio_packet(data);
+	break;
+      case GUINT32_TO_LE(0x0064bef0): /* player arrived */
+	decode_new_player(data);
+	send_acknowledge(si->private_id, si->public_id, ack_counter++, sockfd, (struct sockaddr *)servaddr);
+	break;
+      case GUINT32_TO_LE(0x0065bef0): /* player quit */
+	decode_player_quit(data);
+	send_acknowledge(si->private_id, si->public_id, ack_counter++, sockfd, (struct sockaddr *)servaddr);
 	break;
       default: /* try this to keep it alive... */
 	send_keepalive(si->private_id, si->public_id, keepalive_counter++, sockfd, (struct sockaddr *)servaddr);

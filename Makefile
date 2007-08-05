@@ -8,7 +8,7 @@ COPTS = -Wall -ansi
 MODULES = crc.o highlevel.o main.o \
           acknowledge.o connection_request.o message2.o \
 	  channel_list.o server_info.o player_list.o \
-	  keepalive.o decoder.o toolbox.o
+	  keepalive.o decoder.o toolbox.o new_player.o
 
 
 default: freespeak

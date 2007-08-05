@@ -1,6 +1,6 @@
 #include "player_list.h"
 
-static void * decode_player(void * data, struct player * pl) {
+void * decode_player(void * data, struct player * pl) {
   void * ptr = data;
   uint8_t len;
 

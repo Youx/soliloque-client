@@ -47,5 +47,6 @@ struct player_list {
 
 struct player_list * decode_player_list(void * data);
 void print_player_list(struct player_list * pll);
-
+void print_player(struct player * pl);
+void * decode_player(void * data, struct player * pl);
 #endif
