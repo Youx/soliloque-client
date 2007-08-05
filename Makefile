@@ -14,21 +14,27 @@ MODULES = crc.o highlevel.o main.o \
 
 default: freespeak
 
-libcelp.so:
+libcelp.a:
 	make -C celp/
 	mv celp/libcelp.a ./
+
+libgsm.a:
+	make -C gsm
+	mv gsm/lib/libgsm.a ./
 
 dataclean:
 	-rm data/*
 
-freespeak: $(MODULES) libcelp.so
-	gcc $(LDFLAGS) $(COPTS) -o freespeak $(MODULES) /usr/lib/libgsm.a libcelp.a
+freespeak: $(MODULES) libcelp.a libgsm.a
+	gcc $(LDFLAGS) $(COPTS) -o freespeak $(MODULES) libcelp.a libgsm.a
 
 .c.o:
 	gcc $(CFLAGS) $(COPTS) -c $<
 
 clean: dataclean
 	-make clean -C celp/
+	-make clean -C gsm/
 	-rm $(MODULES) 
 	-rm freespeak
 	-rm libcelp.a
+	-rm libgsm.a
