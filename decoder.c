@@ -1,4 +1,5 @@
 #include "decoder.h"
+#include "celp/celp.h"
 
 #define FRAME_SIZE 160
 
@@ -222,7 +223,7 @@ void evenize_speex_5_950(unsigned char * frame, int nb) {
     frame[i] |= (frame[i+1] >> ((nb)%8));
   }
 }
-
+/* FIXME!!!!! */
 static int16_t * decode_speex_5_950(void * input, uint8_t nbframes) {
   int16_t * out = (int16_t *)calloc(FRAME_SIZE * nbframes, sizeof(int16_t));
   int16_t * outptr = out;
@@ -253,8 +254,8 @@ static int16_t * decode_speex_5_950(void * input, uint8_t nbframes) {
   return out;
 }
 
-static int16_t * decode_gsm_14_8(void * input) {
-  int16_t * out = (int16_t *)calloc(FRAME_SIZE * 5, sizeof(int16_t));
+static int16_t * decode_gsm(void * input, int nbframes) {
+  int16_t * out = (int16_t *)calloc(FRAME_SIZE * nbframes, sizeof(int16_t));
   int16_t * outptr = out;
   unsigned char * ptr = input;
   int i;
@@ -263,7 +264,7 @@ static int16_t * decode_gsm_14_8(void * input) {
   ptr+=6;
 
   handle = gsm_create();
-  for(i=0 ; i<5 ; i++) {
+  for(i=0 ; i<nbframes ; i++) {
     if(gsm_decode(handle, ptr, outptr)) {
       printf("GSM ERROR...\n");
     }
@@ -277,6 +278,30 @@ static int16_t * decode_gsm_14_8(void * input) {
   return out;
 }
 
+static int16_t * decode_celp(void * input, int nbframes) {
+  int16_t * out = (int16_t *)calloc(240 * nbframes, sizeof(int16_t));
+  int16_t * outptr = out;
+  unsigned char * ptr = input;
+  int i;
+  celp_decoder_state * state;
+
+  ptr+=6;
+
+  state = create_celp_decoder_state();
+  init_celp_decoder_state(state, CELP_4_5_FRAMESIZE);
+
+  for(i=0 ; i<nbframes ; i++) {
+    celp_decode(ptr, outptr, state);
+
+    ptr+=17;
+    outptr += 240;
+  }
+
+  destroy_celp_decoder_state(state);
+
+  return out;
+}
+
 
 void decode_audio_packet(void * input) {
   uint8_t nbframes;
@@ -285,13 +310,12 @@ void decode_audio_packet(void * input) {
   uint8_t codec;
   
   ptr+=3;
-/*  printf("decode codec : 0x%x%x\n", *ptr, *(ptr+1));*/
   codec = *ptr;
   ptr+=19;
   nbframes = *ptr; 
   ptr++;
 
-  printf(">>>> CODEC : 0x%x\n", *((char *)(&codec)));
+/*  printf(">>>> CODEC : 0x%x\n", *((char *)(&codec)));*/
   switch(codec) {
     case CODEC_SPEEX_25_9:
       out = decode_speex_26_4(ptr, nbframes);
@@ -312,11 +336,24 @@ void decode_audio_packet(void * input) {
       out = decode_speex_5_950(ptr, nbframes);
       break;
     case CODEC_GSM_14_8:
-      out = decode_gsm_14_8(ptr);
+      nbframes = 5;
+      out = decode_gsm(ptr,nbframes);
       break;
-/*    default:
-      out = decode_junk(ptr, nbframes);*/
+    case CODEC_GSM_16_4:
+      nbframes = 3;
+      out = decode_gsm(ptr,nbframes);
+      break;
+    case CODEC_CELP_6_3:
+      nbframes = 3;
+      out = decode_celp(ptr, nbframes);
+      break;
+    case CODEC_CELP_5_1:
+      nbframes = 9;
+      out = decode_celp(ptr, nbframes);
+      break;
+    default:
+      out = decode_junk(ptr, nbframes);
   }
-  append(out, sizeof(short) * FRAME_SIZE * 5, "data/decoded_audio.raw");
+  append(out, sizeof(short) * FRAME_SIZE * nbframes, "data/decoded_audio.raw");
   free(out);
 }

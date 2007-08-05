@@ -1,7 +1,7 @@
 #CFLAGS = `pkg-config --cflags glib-2.0` -ggdb
 #LDFLAGS = `pkg-config --libs glib-2.0` -lm
 CFLAGS = `pkg-config --cflags speex`
-LDFLAGS = -lm `pkg-config --libs speex` 
+LDFLAGS = -lm `pkg-config --libs speex`
 
 COPTS = -Wall -ansi
 
@@ -13,16 +13,22 @@ MODULES = crc.o highlevel.o main.o \
 
 
 default: freespeak
-	
-dataclean:
-	@-rm data/*
 
-freespeak: $(MODULES)
-	gcc $(LDFLAGS) $(COPTS) -o freespeak $(MODULES) /usr/lib/libgsm.a
+libcelp.so:
+	make -C celp/
+	mv celp/libcelp.a ./
+
+dataclean:
+	-rm data/*
+
+freespeak: $(MODULES) libcelp.so
+	gcc $(LDFLAGS) $(COPTS) -o freespeak $(MODULES) /usr/lib/libgsm.a libcelp.a
 
 .c.o:
 	gcc $(CFLAGS) $(COPTS) -c $<
 
 clean: dataclean
-	@-rm $(MODULES) 
-	@-rm freespeak
+	-make clean -C celp/
+	-rm $(MODULES) 
+	-rm freespeak
+	-rm libcelp.a

@@ -28,6 +28,10 @@ void printtype(int32_t type) {
     case GUINT32_TO_LE(0x900bef3): /* speex 11 kbps */
     case GUINT32_TO_LE(0x800bef3): /* speex 8 kbps */
     case GUINT32_TO_LE(0x700bef3): /* speex 8 kbps */
+    case GUINT32_TO_LE(0x0300bef3): /* gsm 16.4 kbps */
+    case GUINT32_TO_LE(0x0200bef3): /* gsm 14.8 kbps */
+    case GUINT32_TO_LE(0x0100bef3): /* celp 6.3 kbps */
+    case GUINT32_TO_LE(0x0000bef3): /* celp 5.1 kbps */
       printf("type : Audio data\n");
       break;
     case GUINT32_TO_LE(0x0064bef0): /* new player arrived */
@@ -87,7 +91,10 @@ void receive(int sockfd, struct sockaddr_in * servaddr) {
       case GUINT32_TO_LE(0x0900bef3): /* speex 11 kbps */
       case GUINT32_TO_LE(0x0800bef3): /* speex 8 kbps */
       case GUINT32_TO_LE(0x0700bef3): /* speex 8 kbps */
+      case GUINT32_TO_LE(0x0300bef3): /* gsm 16.4 kbps */
       case GUINT32_TO_LE(0x0200bef3): /* gsm 14.8 kbps */
+      case GUINT32_TO_LE(0x0100bef3): /* celp 6.3 kbps */
+      case GUINT32_TO_LE(0x0000bef3): /* celp 5.1 kbps */
 	decode_audio_packet(data);
 	break;
       case GUINT32_TO_LE(0x0064bef0): /* player arrived */
