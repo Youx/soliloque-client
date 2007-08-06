@@ -89,16 +89,18 @@ static int16_t * decode_speex_26_4(void * input, uint8_t nbframes) {
   state = speex_decoder_init(&speex_nb_mode);
   speex_bits_init(&bits);
   
+  speex_bits_read_from(&bits, ptr, 492/8*5);
+
   for(i=0 ; i<nbframes ; i++) {
-    if(i%2 == 1) {
+    /*if(i%2 == 1) {
       ptr --;
       evenize_speex_26_4((unsigned char *)ptr);
-    }
+    }*/
 
-    speex_bits_read_from(&bits, ptr, 492/8);
+    /* speex_bits_read_from(&bits, ptr, 492/8); */
     speex_decode_int(state, &bits, outptr);
 
-    ptr+=62;
+    /* ptr+=62; */
     outptr += FRAME_SIZE;
   }
 
