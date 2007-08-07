@@ -7,3 +7,4 @@ rm depcomp
 rm install-sh
 rm Makefile.in
 rm missing
+rm data/*
