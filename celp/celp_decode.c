@@ -45,7 +45,7 @@
 #endif
 
 #include <stdlib.h>
-#ifndef MACOSX
+#ifndef __APPLE__
 #include <malloc.h>
 #endif
 #include <memory.h>

@@ -147,7 +147,7 @@ C	Prentice Hall International, 1985, Chapter 4 (by Bishnu Atal).
 #endif
 
 #include <stdlib.h>
-#ifndef MACOSX
+#ifndef __APPLE__
 #include <malloc.h>
 #endif
 #include <memory.h>
