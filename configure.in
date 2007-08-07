@@ -13,38 +13,44 @@ AC_PROG_LN_S
 AC_PROG_MAKE_SET
 AC_PROG_RANLIB
 
-# Add check for gsm
+
+# Add options for gsm
 AC_ARG_WITH(gsm,
     [ --with-gsm=<path> prefix of GSM installation. e.g. /usr/local or /usr],
-    [GSM_PREFIX=$with_gsm],
-    AC_MSG_ERROR([You must call configure with the --with-gsm option.
-    This tells configure where to find the GSM C library and headers.
-    e.g. --with-gsm=/usr/local or --with-gsm=/usr])
+    [GSM_PREFIX=$with_gsm
+	 AC_SUBST(GSM_PREFIX)
+	 GSM_LIBS="-L${GSM_PREFIX}/lib/ -lgsm"
+	 GSM_CFLAGS="-I${GSM_PREFIX}/include"
+	 AC_SUBST(GSM_LIBS)
+	 AC_SUBST(GSM_CFLAGS)
+	 CPPFLAGS="$CFLAGS $GSM_CFLAGS"
+	 LIBS="$LIBS $GSM_LIBS"]
 )
-AC_SUBST(GSM_PREFIX)
-GSM_LIBS="-L${GSM_PREFIX}/lib/ -lgsm"
-GSM_CFLAGS="-I${GSM_PREFIX}/include"
-AC_SUBST(GSM_LIBS)
-AC_SUBST(GSM_CFLAGS)
-CPPFLAGS="$CPPFLAGS $GSM_CFLAGS"
+
+# Set path for speex using pkg-config
+PKG_CHECK_MODULES(SPEEX, speex, 
+    [AC_SUBST(SPEEX_CFLAGS)
+	 AC_SUBST(SPEEX_LIBS)
+	 CPPFLAGS="$CFLAGS $SPEEX_CFLAGS"
+	 LIBS="$LIBS $SPEEX_LIBS"],
+	[AC_ERROR(Please install speex first.)]
+)
 
 
-
-# Checks for libraries.
-# FIXME: Replace `main' with a function in `-lm':
-AC_CHECK_LIB([m], [sqrt])
-AC_CHECK_LIB([gsm], [gsm_create])
-AC_CHECK_LIB([speex], [speex_decoder_init])
-
-# check for speex
-PKG_CHECK_MODULES(DEPS, speex)
-AC_SUBST(DEPS_CFLAGS)
-AC_SUBST(DEPS_LIBS)
 
 # Checks for header files.
 AC_HEADER_STDC
 AC_CHECK_HEADERS([arpa/inet.h fcntl.h limits.h malloc.h memory.h netinet/in.h stdint.h stdlib.h string.h strings.h sys/socket.h unistd.h utime.h])
-AC_CHECK_HEADERS([gsm.h])
+AC_CHECK_HEADER([speex/speex.h], [], [AC_ERROR(Unable to find speex header.)])
+AC_CHECK_HEADER([gsm.h], [], [AC_ERROR(Unable to find gsm header.)])
+
+# Checks for libraries.
+AC_CHECK_LIB([m], [sqrt])
+AC_CHECK_LIB([gsm], [gsm_create])
+AC_CHECK_LIB([speex], [speex_decoder_init])
+
+
+
 # Checks for typedefs, structures, and compiler characteristics.
 AC_HEADER_STAT
 AC_C_CONST
