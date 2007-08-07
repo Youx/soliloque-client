@@ -1,0 +1,12 @@
+
+To compile, run
+
+./autogen.sh
+make
+
+
+You will need 
+- automake/autoconf tools
+- a C compiler
+- the gsm codec installed (source included in gsm subdirectory)
+- the speex codec (http://www.speex.org)

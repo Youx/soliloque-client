@@ -1,0 +1,14 @@
+freespeak
+  copyright:	Hugo Camboulive
+  contact:	hugo.camboulive@gmail.com
+  licence:	GPLv3
+
+celp codec (HawkVoice Library)
+  copyright:	Phil Frisbie
+  contact:	http://www.hawksoft.com/hawkvoice
+  licence:	LGPL
+
+gsm codec
+  copyright:	Jutta Degener and Carsten Bormann, 
+	    Technische Universitaet Berlin.
+  contact:	http://kbs.cs.tu-berlin.de/~jutta/toast.html
