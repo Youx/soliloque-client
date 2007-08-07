@@ -1,4 +1,5 @@
 #!/bin/sh
 aclocal
 autoconf
-automake
+automake -a
+./configure
