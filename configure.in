@@ -9,6 +9,7 @@ AC_CONFIG_HEADER([config.h])
 
 # Checks for programs.
 AC_PROG_CC
+AC_PROG_CXX
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
 AC_PROG_RANLIB
@@ -27,29 +28,44 @@ AC_ARG_WITH(gsm,
 	 LIBS="$LIBS $GSM_LIBS"]
 )
 
-# Set path for speex using pkg-config
-PKG_CHECK_MODULES(SPEEX, speex, 
-    [AC_SUBST(SPEEX_CFLAGS)
-	 AC_SUBST(SPEEX_LIBS)
-	 CPPFLAGS="$CFLAGS $SPEEX_CFLAGS"
-	 LIBS="$LIBS $SPEEX_LIBS"],
-	[AC_ERROR(Please install speex first.)]
-)
+# Check for speex
+XIPH_PATH_SPEEX()
+# Check for wxwidgets
+AM_OPTIONS_WXCONFIG
+reqwx=2.6.0
+AM_PATH_WXCONFIG($reqwx, wxWin=1)
+if test "$wxWin" != 1; then
+  AC_MSG_ERROR([
+    wxWidgets must be installed on your system.
+
+    Please check that wx-config is in path, the directory
+    where wxWidgets libraries are installed (returned by
+    'wx-config --libs' or 'wx-config --static --libs' command)
+    is in LD_LIBRARY_PATH or equivalent variable and
+    wxWidgets version is $reqwx or above.
+  ])
+fi
+CXXFLAGS="-I/usr/include/"
+CPPFLAGS="$CPPFLAGS $WX_CPPFLAGS"
+CXXFLAGS="$CXXFLAGS $WX_CXXFLAGS_ONLY"
+CFLAGS="$CFLAGS $WX_CFLAGS_ONLY"
+LIBS="$LIBS $WX_LIBS"
 
 
 
 # Checks for header files.
 AC_HEADER_STDC
-AC_CHECK_HEADERS([arpa/inet.h fcntl.h limits.h malloc.h memory.h netinet/in.h stdint.h stdlib.h string.h strings.h sys/socket.h unistd.h utime.h])
-AC_CHECK_HEADER([speex/speex.h], [], [AC_ERROR(Unable to find speex header.)])
+AC_CHECK_HEADERS([arpa/inet.h fcntl.h limits.h malloc.h memory.h netinet/in.h stdint.h stdlib.h string.h strings.h sys/socket.h unistd.h utime.h, string.h])
 AC_CHECK_HEADER([gsm.h], [], [AC_ERROR(Unable to find gsm header.)])
 
 # Checks for libraries.
 AC_CHECK_LIB([m], [sqrt])
 AC_CHECK_LIB([gsm], [gsm_create])
-AC_CHECK_LIB([speex], [speex_decoder_init])
 
 
+# Check for boost::thread
+#AX_BOOST_BASE()
+#AX_BOOST_THREAD()
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_HEADER_STAT
@@ -72,5 +88,5 @@ AC_FUNC_STAT
 AC_FUNC_UTIME_NULL
 AC_CHECK_FUNCS([bzero memset pathconf socket sqrt strchr strrchr strtol utime])
 
-AC_CONFIG_FILES(Makefile celp/Makefile)
+AC_CONFIG_FILES(Makefile celp/Makefile gui/Makefile)
 AC_OUTPUT

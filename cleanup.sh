@@ -6,9 +6,9 @@ rm configure
 rm autoscan.log
 rm config.sub
 rm config.guess
-rm config.h.in~
 rm depcomp
 rm install-sh
 rm Makefile.in
 rm missing
 rm data/*
+rm gui/*.in
