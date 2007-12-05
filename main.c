@@ -11,7 +11,7 @@
 #include "highlevel.h"
 #include "connection_request.h"
 
-int main2() {
+extern "C" int main2() {
   int sockfd;
   struct sockaddr_in servaddr;
 

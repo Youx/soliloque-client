@@ -2,7 +2,7 @@
 
 
 struct player * decode_new_player(void * data) {
-  char * ptr = data;
+  char * ptr = (char *)data;
   struct player * pl = (struct player *)calloc(sizeof(struct player), 1);
 
   ptr += 24;

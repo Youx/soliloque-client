@@ -3,7 +3,7 @@
 
 
 static void  * init_keepalive(uint32_t priv_id, uint32_t pub_id, uint32_t counter) {
-  uint32_t * msg = calloc(sizeof(uint32_t), 5);
+  uint32_t * msg = (uint32_t *)calloc(sizeof(uint32_t), 5);
   msg[0] = GUINT32_TO_LE(0x0001bef4);
   msg[1] = GINT32_TO_LE(priv_id);
   msg[2] = GINT32_TO_LE(pub_id);
@@ -18,7 +18,7 @@ static void destroy_keepalive(void * msg) {
 }
 
 void send_keepalive(uint32_t private_id, uint32_t public_id, uint32_t counter,int s, const struct sockaddr * to) {
-  uint8_t * msg = init_keepalive(private_id, public_id, counter);
+  uint8_t * msg = (uint8_t *)init_keepalive(private_id, public_id, counter);
   sendto(s, msg, 5*sizeof(uint32_t), 0, to, sizeof(*to));
   destroy_keepalive(msg);
 }

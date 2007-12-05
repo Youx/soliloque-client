@@ -16,17 +16,17 @@ AC_PROG_RANLIB
 
 
 # Add options for gsm
-AC_ARG_WITH(gsm,
-    [ --with-gsm=<path> prefix of GSM installation. e.g. /usr/local or /usr],
-    [GSM_PREFIX=$with_gsm
-	 AC_SUBST(GSM_PREFIX)
-	 GSM_LIBS="-L${GSM_PREFIX}/lib/ -lgsm"
-	 GSM_CFLAGS="-I${GSM_PREFIX}/include"
-	 AC_SUBST(GSM_LIBS)
-	 AC_SUBST(GSM_CFLAGS)
-	 CPPFLAGS="$CFLAGS $GSM_CFLAGS"
-	 LIBS="$LIBS $GSM_LIBS"]
-)
+#AC_ARG_WITH(gsm,
+#    [ --with-gsm=<path> prefix of GSM installation. e.g. /usr/local or /usr],
+#    [GSM_PREFIX=$with_gsm
+#	 AC_SUBST(GSM_PREFIX)
+#	 GSM_LIBS="${GSM_PREFIX}/lib/libgsm.a"
+#	 GSM_CFLAGS="-I${GSM_PREFIX}/include"
+#	 AC_SUBST(GSM_LIBS)
+#	 AC_SUBST(GSM_CFLAGS)
+#         CFLAGS="$CFLAGS $GSM_CFLAGS"
+#    ]
+#)
 
 # Check for speex
 XIPH_PATH_SPEEX()
@@ -56,11 +56,11 @@ LIBS="$LIBS $WX_LIBS"
 # Checks for header files.
 AC_HEADER_STDC
 AC_CHECK_HEADERS([arpa/inet.h fcntl.h limits.h malloc.h memory.h netinet/in.h stdint.h stdlib.h string.h strings.h sys/socket.h unistd.h utime.h, string.h])
-AC_CHECK_HEADER([gsm.h], [], [AC_ERROR(Unable to find gsm header.)])
+#AC_CHECK_HEADER([gsm.h], [], [AC_ERROR(Unable to find gsm header.)])
 
 # Checks for libraries.
 AC_CHECK_LIB([m], [sqrt])
-AC_CHECK_LIB([gsm], [gsm_create])
+#AC_CHECK_LIB([gsm], [gsm_create])
 
 
 # Check for boost::thread
@@ -88,5 +88,5 @@ AC_FUNC_STAT
 AC_FUNC_UTIME_NULL
 AC_CHECK_FUNCS([bzero memset pathconf socket sqrt strchr strrchr strtol utime])
 
-AC_CONFIG_FILES(Makefile celp/Makefile gui/Makefile)
+AC_CONFIG_FILES(Makefile celp/Makefile gui/Makefile gsm/Makefile)
 AC_OUTPUT

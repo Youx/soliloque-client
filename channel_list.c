@@ -67,7 +67,7 @@ void destroy_channel_list(struct channel_list * ch) {
 }
 
 void * decode_channel(void * data, struct channel * ch) {
-  void * ptr = data;
+  void * ptr = (char *)data;
   int len;
 
   ch->id = GUINT32_FROM_LE(* (uint32_t *)ptr);
@@ -86,17 +86,17 @@ void * decode_channel(void * data, struct channel * ch) {
   
   len = strlen((char *)ptr);
   ch->name = (char *)calloc(len+1, 1);
-  strcpy(ch->name, ptr);
+  strcpy(ch->name, (char *)ptr);
   ptr = (char *)ptr + len+1;
 
   len = strlen((char *)ptr);
   ch->topic = (char *)calloc(len+1, 1);
-  strcpy(ch->topic, ptr);
+  strcpy(ch->topic, (char *)ptr);
   ptr = (char *)ptr + len+1;
 
   len = strlen((char *)ptr);
   ch->desc = (char *)calloc(len+1, 1);
-  strcpy(ch->desc, ptr);
+  strcpy(ch->desc, (char *)ptr);
   ptr = (char *)ptr + len+1;
 
   return ptr;
@@ -116,7 +116,7 @@ struct channel_list * decode_channel_list(void * data) {
   chl->size = GUINT32_FROM_LE(* ((uint32_t *) ptr));
   ptr = (uint32_t *) ptr +1;
   
-  chl->channels = calloc(sizeof(struct channel), chl->size);
+  chl->channels = (channel *)calloc(sizeof(struct channel), chl->size);
 
   for(i=0 ; i < chl->size ; i++) {
     ptr = decode_channel(ptr, chl->channels+i);

@@ -23,7 +23,7 @@ void * decode_player(void * data, struct player * pl) {
   len = *(uint8_t *)ptr;
   ptr = (uint8_t *)ptr +1;
 
-  strncpy(pl->name, ptr, len);
+  strncpy(pl->name, (char *)ptr, len);
   ptr = (char*)ptr + 29;
 
   return ptr;

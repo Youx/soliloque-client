@@ -13,7 +13,6 @@
 #include "channel_list.h"
 
 #include <stdlib.h>
-#include <gsm.h>
 
 void decode_audio_packet(void * input);
 

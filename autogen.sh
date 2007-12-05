@@ -1,6 +1,6 @@
 #!/bin/sh
 echo "Generate aclocal.m4..."
-aclocal -I ./
+aclocal -I ./ -I /usr/local/share/aclocal/ -I /sw/share/aclocal/
 echo "Generate configure..."
 autoconf
 echo "Generate Makefiles"

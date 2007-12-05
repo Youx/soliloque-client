@@ -24,7 +24,7 @@
 #include "toolbox.h"
 #include "decoder.h"
 #include "new_player.h"
-
+#include "player_quit.h"
 
 void receive(int sockfd, struct sockaddr_in * servaddr);
 

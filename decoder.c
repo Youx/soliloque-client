@@ -1,5 +1,6 @@
 #include "decoder.h"
 #include "celp/celp.h"
+#include "gsm/gsm.h"
 
 #define FRAME_SIZE 160
 
@@ -30,7 +31,7 @@ static int16_t * decode_speex(void * input, uint8_t nbframes, int datasize) {
   state = speex_decoder_init(&speex_nb_mode);
   speex_bits_init(&bits);
   
-  speex_bits_read_from(&bits, input, datasize*nbframes/8);
+  speex_bits_read_from(&bits, (char *)input, datasize*nbframes/8);
 
   for(i=0 ; i<nbframes ; i++) {
     speex_decode_int(state, &bits, outptr);
@@ -47,7 +48,7 @@ static int16_t * decode_speex(void * input, uint8_t nbframes, int datasize) {
 static int16_t * decode_gsm(void * input, int nbframes) {
   int16_t * out = (int16_t *)calloc(FRAME_SIZE * nbframes, sizeof(int16_t));
   int16_t * outptr = out;
-  unsigned char * ptr = input;
+  unsigned char * ptr = (unsigned char *)input;
   int i;
   gsm handle;
 
@@ -71,7 +72,7 @@ static int16_t * decode_gsm(void * input, int nbframes) {
 static int16_t * decode_celp(void * input, int nbframes) {
   int16_t * out = (int16_t *)calloc(240 * nbframes, sizeof(int16_t));
   int16_t * outptr = out;
-  unsigned char * ptr = input;
+  unsigned char * ptr = (unsigned char *)input;
   int i;
   celp_decoder_state * state;
 
@@ -96,7 +97,7 @@ static int16_t * decode_celp(void * input, int nbframes) {
 void decode_audio_packet(void * input) {
   uint8_t nbframes;
   int16_t * out;
-  char * ptr = input;
+  char * ptr = (char *)input;
   uint8_t codec;
   
   ptr+=3;

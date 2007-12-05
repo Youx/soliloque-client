@@ -15,9 +15,6 @@
 /* Define to 1 if you have the <inttypes.h> header file. */
 #undef HAVE_INTTYPES_H
 
-/* Define to 1 if you have the `gsm' library (-lgsm). */
-#undef HAVE_LIBGSM
-
 /* Define to 1 if you have the `m' library (-lm). */
 #undef HAVE_LIBM
 
@@ -92,9 +89,6 @@
 
 /* Define to 1 if you have the `utime' function. */
 #undef HAVE_UTIME
-
-/* Define to 1 if you have the <utime.h> header file. */
-#undef HAVE_UTIME_H
 
 /* Define to 1 if you have the <utime.h,> header file. */
 #undef HAVE_UTIME_H_

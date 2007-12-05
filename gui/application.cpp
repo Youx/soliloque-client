@@ -1,7 +1,7 @@
 #include "application.h"
 #include "connectbox.h"
 #include "fmenu.h"
-
+#include <pthread.h>
 /*#include <zthread/Runnable.h>*/
 
 
@@ -14,29 +14,14 @@ END_EVENT_TABLE()
 IMPLEMENT_APP(FreeSpeak)
 
 
-
-/*EngineThread::EngineThread() : ZThread::Runnable() {
-
+void *thread_func( void *vptr_args ){
+	main2();
 }
 
-void EngineThread::run() {
-  main2(); */
-/*  int sockfd;
-  struct sockaddr_in servaddr;
-
-  struct connection_request connectme = {
-    "Machine Youx",
-    "",
-    "sllm",
-    "Client test!",
-    0
-  };
-  connect_to(&connectme, &sockfd, &servaddr);
-  receive(sockfd, &servaddr); */
-  /*return 0;*/
-/*}*/
-
 bool FreeSpeak::OnInit() {
+	pthread_t thread;
+	pthread_create(&thread, NULL, thread_func, NULL);
+	
   MainWindow * frame = new MainWindow( _T("FreeSpeak"), wxPoint(50,50), wxSize(450,340));
   frame->Show(TRUE);
   SetTopWindow(frame);
