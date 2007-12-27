@@ -2,11 +2,6 @@
 
 extern "C" int main2();
 
-/*class EngineThread : public ZThread::Runnable {
-  public:
-    EngineThread();
-    void run();
-};*/
 
 
 class FreeSpeak: public wxApp 

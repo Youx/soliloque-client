@@ -1,6 +1,8 @@
 #include "application.h"
 #include "connectbox.h"
 #include "fmenu.h"
+#include "mainandlog.h"
+
 #include <pthread.h>
 /*#include <zthread/Runnable.h>*/
 
@@ -19,8 +21,8 @@ void *thread_func( void *vptr_args ){
 }
 
 bool FreeSpeak::OnInit() {
-	pthread_t thread;
-	pthread_create(&thread, NULL, thread_func, NULL);
+	/*pthread_t thread;
+	pthread_create(&thread, NULL, thread_func, NULL);*/
 	
   MainWindow * frame = new MainWindow( _T("FreeSpeak"), wxPoint(50,50), wxSize(450,340));
   frame->Show(TRUE);
@@ -35,6 +37,8 @@ MainWindow::MainWindow(const wxString& title, const wxPoint& pos, const wxSize& 
    SetMenuBar(menubar);
    CreateStatusBar();
    SetStatusText( _T(""));
+	 MainAndLog * m_splitter = new MainAndLog(this);
+   m_splitter->SetSashGravity(1.0);
 }
 
 void MainWindow::OnQuit(wxCommandEvent& WXUNUSED(event)) {
