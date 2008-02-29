@@ -49,19 +49,24 @@ CXXFLAGS="-I/usr/include/"
 CPPFLAGS="$CPPFLAGS $WX_CPPFLAGS"
 CXXFLAGS="$CXXFLAGS $WX_CXXFLAGS_ONLY"
 CFLAGS="$CFLAGS $WX_CFLAGS_ONLY"
-LIBS="$LIBS $WX_LIBS"
+LIBS="$LIBS $WX_LIBS $WX_LIBS_STATIC"
 
+
+# portaudio stuff...
+CFLAGS="$CFLAGS `pkg-config --cflags portaudio-2.0`"
+LIBS="$CFLAGS `pkg-config --libs portaudio-2.0`"
 
 
 # Checks for header files.
 AC_HEADER_STDC
 AC_CHECK_HEADERS([arpa/inet.h fcntl.h limits.h malloc.h memory.h netinet/in.h stdint.h stdlib.h string.h strings.h sys/socket.h unistd.h utime.h, string.h])
 #AC_CHECK_HEADER([gsm.h], [], [AC_ERROR(Unable to find gsm header.)])
+#AC_CHECK_HEADER([portaudio.h], [], [AC_ERROR(Unable to find portaudio header.)])
 
 # Checks for libraries.
 AC_CHECK_LIB([m], [sqrt])
 #AC_CHECK_LIB([gsm], [gsm_create])
-
+#AC_CHECK_LIB([portaudio], [Pa_Initialize])
 
 # Check for boost::thread
 #AX_BOOST_BASE()

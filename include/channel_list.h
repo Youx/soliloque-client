@@ -6,7 +6,6 @@
 #include <string.h>
 #include <stdio.h>
 
-#define TYPE_CHANNEL_LIST GINT32_TO_LE(0x0006bef0)
 
 
 #define CODEC_CELP_5_1	  0

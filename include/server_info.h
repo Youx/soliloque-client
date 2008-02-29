@@ -15,7 +15,6 @@
 #include <stdio.h>
 #include <string.h>
 
-#define TYPE_SERVER_INFO GINT32_TO_LE(0x0004bef4)
 
 
 struct server_info {

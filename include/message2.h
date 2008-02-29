@@ -11,7 +11,6 @@
 #include <arpa/inet.h>
 #include <string.h>
 
-#define TYPE_SERVER_INFO_RESPONSE GINT32_TO_LE(0x0005bef0)
 
 
 void send_message2(uint32_t private_id, uint32_t public_id, int s, const struct sockaddr * to);

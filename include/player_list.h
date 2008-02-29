@@ -7,7 +7,6 @@
 #include <stdio.h>
 
 
-#define TYPE_PLAYER_LIST GINT32_TO_LE(0x0007bef0)
 
 /* Channel privileges */
 #define CHANNEL_PRIV_CHANADMIN	1

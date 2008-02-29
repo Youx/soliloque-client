@@ -1,6 +1,8 @@
 #include "decoder.h"
 #include "celp/celp.h"
 #include "gsm/gsm.h"
+#include "sound.h"
+
 
 #define FRAME_SIZE 160
 
@@ -99,7 +101,9 @@ void decode_audio_packet(void * input) {
   int16_t * out;
   char * ptr = (char *)input;
   uint8_t codec;
-  
+	int i;
+	
+	
   ptr+=3;
   codec = *ptr;
   ptr+=19;
@@ -153,5 +157,10 @@ void decode_audio_packet(void * input) {
       out = NULL;
   }
   append(out, sizeof(short) * FRAME_SIZE * nbframes, "data/decoded_audio.raw");
+	
+	for(i=0;i<nbframes;i++) {
+		while(!audio_to_speakers(out+(FRAME_SIZE*i), FRAME_SIZE));
+		//audio_to_speakers(out + ( FRAME_SIZE * i), FRAME_SIZE);
+	}
   free(out);
 }

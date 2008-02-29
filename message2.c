@@ -1,4 +1,5 @@
 #include "message2.h"
+#include "highlevel.h"
 
 struct message2 {
   uint32_t function;

@@ -16,7 +16,6 @@
 #include <sys/types.h>
 #include <arpa/inet.h>
 
-#define TYPE_ACKNOWLEDGE GINT32_TO_LE(0x0000bef1)
 
 
 

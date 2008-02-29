@@ -21,8 +21,8 @@ void *thread_func( void *vptr_args ){
 }
 
 bool FreeSpeak::OnInit() {
-	/*pthread_t thread;
-	pthread_create(&thread, NULL, thread_func, NULL);*/
+	pthread_t thread;
+	pthread_create(&thread, NULL, thread_func, NULL);
 	
   MainWindow * frame = new MainWindow( _T("FreeSpeak"), wxPoint(50,50), wxSize(450,340));
   frame->Show(TRUE);

@@ -22,7 +22,6 @@
 #include "crc.h"
 
 
-#define TYPE_CONNECTION_REQUEST GINT32_TO_LE(0x0003bef4)
 
 
 
