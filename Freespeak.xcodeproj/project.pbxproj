@@ -11,8 +11,6 @@
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
-		9A9DA0450D78D82500B38830 /* Makefile.am in Resources */ = {isa = PBXBuildFile; fileRef = 9A9DA0310D78D82500B38830 /* Makefile.am */; };
-		9A9DA0460D78D82500B38830 /* Makefile.in in Resources */ = {isa = PBXBuildFile; fileRef = 9A9DA0320D78D82500B38830 /* Makefile.in */; };
 		9A9DA0580D78D85F00B38830 /* zerofilt.c in Sources */ = {isa = PBXBuildFile; fileRef = 9A9DA03C0D78D82500B38830 /* zerofilt.c */; };
 		9A9DA0590D78D85F00B38830 /* gaincode.c in Sources */ = {isa = PBXBuildFile; fileRef = 9A9DA02D0D78D82500B38830 /* gaincode.c */; };
 		9A9DA05A0D78D85F00B38830 /* ham.c in Sources */ = {isa = PBXBuildFile; fileRef = 9A9DA02E0D78D82500B38830 /* ham.c */; };
@@ -35,9 +33,6 @@
 		9A9DA06B0D78D86500B38830 /* celp.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A9DA0260D78D82500B38830 /* celp.h */; };
 		9A9DA06C0D78D86500B38830 /* codebook.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A9DA02A0D78D82500B38830 /* codebook.h */; };
 		9A9DA06D0D78D86500B38830 /* pdelay.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A9DA0350D78D82500B38830 /* pdelay.h */; };
-		9A9DA0940D78D88D00B38830 /* gsm.h.orig in Resources */ = {isa = PBXBuildFile; fileRef = 9A9DA0760D78D88D00B38830 /* gsm.h.orig */; };
-		9A9DA09F0D78D88D00B38830 /* Makefile.am in Resources */ = {isa = PBXBuildFile; fileRef = 9A9DA0810D78D88D00B38830 /* Makefile.am */; };
-		9A9DA0A00D78D88D00B38830 /* Makefile.in in Resources */ = {isa = PBXBuildFile; fileRef = 9A9DA0820D78D88D00B38830 /* Makefile.in */; };
 		9A9DA0B20D78D8AC00B38830 /* gsm_create.c in Sources */ = {isa = PBXBuildFile; fileRef = 9A9DA0770D78D88D00B38830 /* gsm_create.c */; };
 		9A9DA0B30D78D8AC00B38830 /* table.c in Sources */ = {isa = PBXBuildFile; fileRef = 9A9DA0880D78D88D00B38830 /* table.c */; };
 		9A9DA0B40D78D8AC00B38830 /* toast_audio.c in Sources */ = {isa = PBXBuildFile; fileRef = 9A9DA08C0D78D88D00B38830 /* toast_audio.c */; };
@@ -116,21 +111,21 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 9A9DA1140D78DA0400B38830 /* core */;
+			remoteGlobalIDString = 9A9DA1140D78DA0400B38830;
 			remoteInfo = core;
 		};
 		9A9DA18F0D78DD5300B38830 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 9A9DA0AE0D78D89800B38830 /* gsm */;
+			remoteGlobalIDString = 9A9DA0AE0D78D89800B38830;
 			remoteInfo = gsm;
 		};
 		9A9DA1910D78DD5300B38830 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 9A9DA0540D78D84900B38830 /* celp */;
+			remoteGlobalIDString = 9A9DA0540D78D84900B38830;
 			remoteInfo = celp;
 		};
 /* End PBXContainerItemProxy section */
@@ -634,11 +629,6 @@
 			files = (
 				8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */,
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
-				9A9DA0450D78D82500B38830 /* Makefile.am in Resources */,
-				9A9DA0460D78D82500B38830 /* Makefile.in in Resources */,
-				9A9DA0940D78D88D00B38830 /* gsm.h.orig in Resources */,
-				9A9DA09F0D78D88D00B38830 /* Makefile.am in Resources */,
-				9A9DA0A00D78D88D00B38830 /* Makefile.in in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
