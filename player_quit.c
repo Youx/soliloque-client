@@ -2,6 +2,6 @@
 
 
 void decode_player_quit(void * data) {
-  char * ptr = (char *)data;
+  //char * ptr = (char *)data;
   printf("Player quit : \n");
 }

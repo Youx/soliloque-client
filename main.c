@@ -11,7 +11,10 @@
 #include "highlevel.h"
 #include "connection_request.h"
 
-extern "C" int main2() {
+#ifndef __APPLE__
+extern "C"
+#endif
+int main2() {
   int sockfd;
   struct sockaddr_in servaddr;
 
@@ -23,7 +26,7 @@ extern "C" int main2() {
     0
   };
 
-	audio_init();
+  audio_init();
   connect_to(&connectme, &sockfd, &servaddr);
   receive(sockfd, &servaddr);
   return 0;

@@ -18,7 +18,6 @@ void decode(int header) {
   short out[FRAME_SIZE];
   float output[FRAME_SIZE];
   char cbits[331-20];
-  int nbBytes;
 
   SpeexBits bits;
   void * state;

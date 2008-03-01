@@ -116,7 +116,7 @@ struct channel_list * decode_channel_list(void * data) {
   chl->size = GUINT32_FROM_LE(* ((uint32_t *) ptr));
   ptr = (uint32_t *) ptr +1;
   
-  chl->channels = (channel *)calloc(sizeof(struct channel), chl->size);
+  chl->channels = (struct channel *)calloc(sizeof(struct channel), chl->size);
 
   for(i=0 ; i < chl->size ; i++) {
     ptr = decode_channel(ptr, chl->channels+i);
