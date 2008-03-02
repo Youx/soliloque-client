@@ -8,16 +8,47 @@
 
 #define SAMPLE_RATE 8000
 #define FRAME_SIZE 160
+#define RINGBUFFER_SIZE 64
+// 64 frames @ 20ms/frame = 1.2 sec
+// 64 frames @ 320B/frame = 20kB
 
 typedef struct
 {
-  int16_t data[FRAME_SIZE];
-  char state;
+  // TODO : Implement this using a ring buffer...
+  int16_t data[RINGBUFFER_SIZE][FRAME_SIZE];
+  int writeidx;
+  int readidx;
+  //char state;
 }   
 audio_out;
 
 static audio_out speakers;
 PaStream *stream;
+
+
+static int16_t * read_data_from_buffer(audio_out * buffer) {
+  int16_t * res;
+  if(buffer->readidx == buffer->writeidx) {
+    return NULL; // buffer empty
+  } else {
+    res = buffer->data[buffer->readidx];
+    buffer->readidx++;
+    buffer->readidx %= RINGBUFFER_SIZE;
+    return res;
+  }
+}
+
+static int write_data_to_buffer(audio_out * buffer, int16_t * data) {
+  if( ((buffer->writeidx + 1) % RINGBUFFER_SIZE) == buffer->readidx ) {
+    fprintf(stderr, "Buffer full!\n");
+    return 0; // buffer full
+  } else {
+    memcpy(buffer->data[buffer->writeidx], data, FRAME_SIZE * sizeof(int16_t));
+    buffer->writeidx++;
+    buffer->writeidx %= RINGBUFFER_SIZE;
+    return 1;
+  }
+}
 
 
 
@@ -36,20 +67,16 @@ static int paOutputCallback( const void *inputBuffer, void *outputBuffer,
   int16_t *out = (int16_t *)outputBuffer;
   unsigned int i;
   (void) inputBuffer; // Prevent unused variable warning.
-  if(data->state == 1) {
+  int16_t * tmp;
+  if( (tmp = read_data_from_buffer(data)) != NULL) {
     for( i=0; i<framesPerBuffer; i++ ) {
-      *out++ = data->data[i];  // left
-      *out++ = data->data[i];  // right
-    }
-    data->state = 2;
+      *out++ = tmp[i];  // left
+      *out++ = tmp[i];  // right
+    }    
   } else {
-	  /*for( i=0; i<framesPerBuffer; i++ ) {
-      *out++ = 0;  // left
-      *out++ = 0;  // right
-    }*/
-		//printf("framesPerBuffer %i\n", framesPerBuffer);
-		bzero(out, sizeof(int16_t) * framesPerBuffer * 2);
-	}
+    bzero(out, sizeof(int16_t) * framesPerBuffer * 2);
+  }
+
   return 0;
 }
 
@@ -57,7 +84,8 @@ static int paOutputCallback( const void *inputBuffer, void *outputBuffer,
 void audio_init() {
   //int fd = open("test.raw",O_RDONLY);
 	bzero(speakers.data, FRAME_SIZE * sizeof(int16_t));
-  speakers.state = 2;
+  speakers.writeidx = 0;
+  speakers.readidx = 0;
 	
   Pa_Initialize();
 
@@ -89,13 +117,10 @@ void audio_close() {
 	Pa_Terminate();
 } 
 
-int audio_to_speakers(int16_t * data, int size) {
-	if(speakers.state == 2) {
-		bzero(speakers.data, FRAME_SIZE * sizeof(int16_t));
-		memcpy(speakers.data, data, FRAME_SIZE * sizeof(int16_t));
-		speakers.state = 1;
-		return 1;
-	} else {
-		return 0;
-	}
+
+
+
+
+int audio_to_speakers(int16_t * data) {
+  return write_data_to_buffer(&speakers, data);
 }

@@ -104,6 +104,13 @@
 		9A9DA1930D78DD7E00B38830 /* libcelp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A9DA0550D78D84900B38830 /* libcelp.a */; };
 		9A9DA1940D78DD7E00B38830 /* libcore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A9DA1150D78DA0400B38830 /* libcore.a */; };
 		9A9DA1950D78DD7E00B38830 /* libgsm.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A9DA0AF0D78D89800B38830 /* libgsm.a */; };
+		9AB0D6B60D79573300A60CA0 /* FreespeakController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AB0D6B50D79573300A60CA0 /* FreespeakController.m */; };
+		9AB0D8C60D7AD30600A60CA0 /* Speex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A9DA1390D78DA6100B38830 /* Speex.framework */; };
+		9AB0D8C70D7AD30600A60CA0 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A9DA1550D78DAC100B38830 /* CoreAudio.framework */; };
+		9AB0D8C80D7AD30600A60CA0 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A9DA1590D78DAFA00B38830 /* AudioToolbox.framework */; };
+		9AB0D8C90D7AD30600A60CA0 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A9DA15D0D78DB1000B38830 /* AudioUnit.framework */; };
+		9AB0D8CA0D7AD30600A60CA0 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A9DA1610D78DB1F00B38830 /* Carbon.framework */; };
+		9AB0D8CB0D7AD30600A60CA0 /* libportaudio.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A9DA1660D78DB4800B38830 /* libportaudio.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -134,7 +141,7 @@
 		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
-		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ../main.m; sourceTree = "<group>"; };
 		29B97319FDCFA39411CA2CEA /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
@@ -154,7 +161,6 @@
 		9A9DA02F0D78D82500B38830 /* lsp34.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lsp34.c; sourceTree = "<group>"; };
 		9A9DA0300D78D82500B38830 /* lsptopc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lsptopc.c; sourceTree = "<group>"; };
 		9A9DA0310D78D82500B38830 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
-		9A9DA0320D78D82500B38830 /* Makefile.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.in; sourceTree = "<group>"; };
 		9A9DA0330D78D82500B38830 /* pctolsp2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pctolsp2.c; sourceTree = "<group>"; };
 		9A9DA0340D78D82500B38830 /* pctolsp3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pctolsp3.c; sourceTree = "<group>"; };
 		9A9DA0350D78D82500B38830 /* pdelay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pdelay.h; sourceTree = "<group>"; };
@@ -172,7 +178,6 @@
 		9A9DA0730D78D88D00B38830 /* debug.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = debug.c; sourceTree = "<group>"; };
 		9A9DA0740D78D88D00B38830 /* decode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = decode.c; sourceTree = "<group>"; };
 		9A9DA0750D78D88D00B38830 /* gsm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gsm.h; sourceTree = "<group>"; };
-		9A9DA0760D78D88D00B38830 /* gsm.h.orig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = gsm.h.orig; sourceTree = "<group>"; };
 		9A9DA0770D78D88D00B38830 /* gsm_create.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = gsm_create.c; sourceTree = "<group>"; };
 		9A9DA0780D78D88D00B38830 /* gsm_decode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = gsm_decode.c; sourceTree = "<group>"; };
 		9A9DA0790D78D88D00B38830 /* gsm_destroy.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = gsm_destroy.c; sourceTree = "<group>"; };
@@ -184,7 +189,6 @@
 		9A9DA07F0D78D88D00B38830 /* long_term.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = long_term.c; sourceTree = "<group>"; };
 		9A9DA0800D78D88D00B38830 /* lpc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lpc.c; sourceTree = "<group>"; };
 		9A9DA0810D78D88D00B38830 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
-		9A9DA0820D78D88D00B38830 /* Makefile.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.in; sourceTree = "<group>"; };
 		9A9DA0830D78D88D00B38830 /* preprocess.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = preprocess.c; sourceTree = "<group>"; };
 		9A9DA0840D78D88D00B38830 /* private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = private.h; sourceTree = "<group>"; };
 		9A9DA0850D78D88D00B38830 /* proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = proto.h; sourceTree = "<group>"; };
@@ -237,6 +241,9 @@
 		9A9DA15D0D78DB1000B38830 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = SDKs/MacOSX10.5.sdk/System/Library/Frameworks/AudioUnit.framework; sourceTree = DEVELOPER_DIR; };
 		9A9DA1610D78DB1F00B38830 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = SDKs/MacOSX10.5.sdk/System/Library/Frameworks/Carbon.framework; sourceTree = DEVELOPER_DIR; };
 		9A9DA1660D78DB4800B38830 /* libportaudio.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libportaudio.a; path = /usr/local/lib/libportaudio.a; sourceTree = "<absolute>"; };
+		9AB0D6B40D79573300A60CA0 /* FreespeakController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FreespeakController.h; sourceTree = "<group>"; };
+		9AB0D6B50D79573300A60CA0 /* FreespeakController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FreespeakController.m; sourceTree = "<group>"; };
+		9AB0D6E50D795DFB00A60CA0 /* main.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -245,8 +252,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				9A9DA1930D78DD7E00B38830 /* libcelp.a in Frameworks */,
-				9A9DA1940D78DD7E00B38830 /* libcore.a in Frameworks */,
 				9A9DA1950D78DD7E00B38830 /* libgsm.a in Frameworks */,
+				9AB0D8C60D7AD30600A60CA0 /* Speex.framework in Frameworks */,
+				9AB0D8C70D7AD30600A60CA0 /* CoreAudio.framework in Frameworks */,
+				9AB0D8C80D7AD30600A60CA0 /* AudioToolbox.framework in Frameworks */,
+				9AB0D8C90D7AD30600A60CA0 /* AudioUnit.framework in Frameworks */,
+				9AB0D8CA0D7AD30600A60CA0 /* Carbon.framework in Frameworks */,
+				9AB0D8CB0D7AD30600A60CA0 /* libportaudio.a in Frameworks */,
+				9A9DA1940D78DD7E00B38830 /* libcore.a in Frameworks */,
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -322,6 +335,7 @@
 		29B97314FDCFA39411CA2CEA /* Freespeak */ = {
 			isa = PBXGroup;
 			children = (
+				9AB0D6B00D79559C00A60CA0 /* mac */,
 				9A9DA1660D78DB4800B38830 /* libportaudio.a */,
 				9A9DA1610D78DB1F00B38830 /* Carbon.framework */,
 				9A9DA15D0D78DB1000B38830 /* AudioUnit.framework */,
@@ -344,7 +358,6 @@
 			isa = PBXGroup;
 			children = (
 				32CA4F630368D1EE00C91783 /* Freespeak_Prefix.pch */,
-				29B97316FDCFA39411CA2CEA /* main.m */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
@@ -384,7 +397,6 @@
 				9A9DA02F0D78D82500B38830 /* lsp34.c */,
 				9A9DA0300D78D82500B38830 /* lsptopc.c */,
 				9A9DA0310D78D82500B38830 /* Makefile.am */,
-				9A9DA0320D78D82500B38830 /* Makefile.in */,
 				9A9DA0330D78D82500B38830 /* pctolsp2.c */,
 				9A9DA0340D78D82500B38830 /* pctolsp3.c */,
 				9A9DA0350D78D82500B38830 /* pdelay.h */,
@@ -408,7 +420,6 @@
 				9A9DA0730D78D88D00B38830 /* debug.c */,
 				9A9DA0740D78D88D00B38830 /* decode.c */,
 				9A9DA0750D78D88D00B38830 /* gsm.h */,
-				9A9DA0760D78D88D00B38830 /* gsm.h.orig */,
 				9A9DA0770D78D88D00B38830 /* gsm_create.c */,
 				9A9DA0780D78D88D00B38830 /* gsm_decode.c */,
 				9A9DA0790D78D88D00B38830 /* gsm_destroy.c */,
@@ -420,7 +431,6 @@
 				9A9DA07F0D78D88D00B38830 /* long_term.c */,
 				9A9DA0800D78D88D00B38830 /* lpc.c */,
 				9A9DA0810D78D88D00B38830 /* Makefile.am */,
-				9A9DA0820D78D88D00B38830 /* Makefile.in */,
 				9A9DA0830D78D88D00B38830 /* preprocess.c */,
 				9A9DA0840D78D88D00B38830 /* private.h */,
 				9A9DA0850D78D88D00B38830 /* proto.h */,
@@ -474,6 +484,17 @@
 				9A9DA1000D78D9CC00B38830 /* acknowledge.c */,
 			);
 			name = core;
+			sourceTree = "<group>";
+		};
+		9AB0D6B00D79559C00A60CA0 /* mac */ = {
+			isa = PBXGroup;
+			children = (
+				29B97316FDCFA39411CA2CEA /* main.m */,
+				9AB0D6E50D795DFB00A60CA0 /* main.h */,
+				9AB0D6B40D79573300A60CA0 /* FreespeakController.h */,
+				9AB0D6B50D79573300A60CA0 /* FreespeakController.m */,
+			);
+			path = mac;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -640,6 +661,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
+				9AB0D6B60D79573300A60CA0 /* FreespeakController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -868,6 +890,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(DEVELOPER_DIR)/SDKs/MacOSX10.5.sdk/System/Library/Frameworks\"",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
@@ -886,6 +912,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(DEVELOPER_DIR)/SDKs/MacOSX10.5.sdk/System/Library/Frameworks\"",
+				);
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Freespeak_Prefix.pch;
