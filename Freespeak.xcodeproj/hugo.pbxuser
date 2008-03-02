@@ -71,14 +71,15 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 226155115;
-			PBXWorkspaceStateSaveDate = 226155115;
+			PBXPerProjectTemplateStateSaveDate = 226156124;
+			PBXWorkspaceStateSaveDate = 226156124;
 		};
 		perUserProjectItems = {
-			9AD109910D7ADDDC00309C8A /* PBXTextBookmark */ = 9AD109910D7ADDDC00309C8A /* PBXTextBookmark */;
-			9AD109930D7ADDDC00309C8A /* PBXTextBookmark */ = 9AD109930D7ADDDC00309C8A /* PBXTextBookmark */;
-			9AD109940D7ADDDC00309C8A /* PBXTextBookmark */ = 9AD109940D7ADDDC00309C8A /* PBXTextBookmark */;
-			9AD109960D7ADDDC00309C8A /* PBXTextBookmark */ = 9AD109960D7ADDDC00309C8A /* PBXTextBookmark */;
+			9A872EE50D7ADE730009AD92 /* PBXTextBookmark */ = 9A872EE50D7ADE730009AD92 /* PBXTextBookmark */;
+			9AD109910D7ADDDC00309C8A = 9AD109910D7ADDDC00309C8A /* PBXTextBookmark */;
+			9AD109930D7ADDDC00309C8A = 9AD109930D7ADDDC00309C8A /* PBXTextBookmark */;
+			9AD109940D7ADDDC00309C8A = 9AD109940D7ADDDC00309C8A /* PBXTextBookmark */;
+			9AD109960D7ADDDC00309C8A = 9AD109960D7ADDDC00309C8A /* PBXTextBookmark */;
 		};
 		sourceControlManager = 9A9DA04F0D78D82600B38830 /* Source Control */;
 		userBuildSettings = {
@@ -96,6 +97,16 @@
 		executables = (
 			9A9DA0170D78D80D00B38830 /* Freespeak */,
 		);
+	};
+	9A872EE50D7ADE730009AD92 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9A9DA0E20D78D9CC00B38830 /* toolbox.h */;
+		name = "toolbox.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 238;
+		vrLoc = 0;
 	};
 	9A9DA0170D78D80D00B38830 /* Freespeak */ = {
 		isa = PBXExecutable;
@@ -210,7 +221,7 @@
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1012, 182}}";
 			sepNavSelRange = "{0, 0}";
-			sepNavVisRange = "{44, 194}";
+			sepNavVisRange = "{0, 238}";
 		};
 	};
 	9A9DA0E30D78D9CC00B38830 /* toolbox.c */ = {
@@ -314,6 +325,7 @@
 	};
 	9AD109920D7ADDDC00309C8A /* config.log */ = {
 		isa = PBXFileReference;
+		lastKnownFileType = file;
 		name = config.log;
 		path = /Users/hugo/Documents/Development/C/freespeak/src/config.log;
 		sourceTree = "<absolute>";
@@ -340,6 +352,7 @@
 	};
 	9AD109950D7ADDDC00309C8A /* config.log */ = {
 		isa = PBXFileReference;
+		lastKnownFileType = file;
 		name = config.log;
 		path = /Users/hugo/Documents/Development/C/freespeak/src/config.log;
 		sourceTree = "<absolute>";
