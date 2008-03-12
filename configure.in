@@ -13,23 +13,12 @@ AC_PROG_CXX
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
 AC_PROG_RANLIB
+PKG_PROG_PKG_CONFIG 
 
-
-# Add options for gsm
-#AC_ARG_WITH(gsm,
-#    [ --with-gsm=<path> prefix of GSM installation. e.g. /usr/local or /usr],
-#    [GSM_PREFIX=$with_gsm
-#	 AC_SUBST(GSM_PREFIX)
-#	 GSM_LIBS="${GSM_PREFIX}/lib/libgsm.a"
-#	 GSM_CFLAGS="-I${GSM_PREFIX}/include"
-#	 AC_SUBST(GSM_LIBS)
-#	 AC_SUBST(GSM_CFLAGS)
-#         CFLAGS="$CFLAGS $GSM_CFLAGS"
-#    ]
-#)
 
 # Check for speex
 XIPH_PATH_SPEEX()
+
 # Check for wxwidgets
 AM_OPTIONS_WXCONFIG
 reqwx=2.6.0
@@ -52,25 +41,21 @@ CFLAGS="$CFLAGS $WX_CFLAGS_ONLY"
 LIBS="$LIBS $WX_LIBS $WX_LIBS_STATIC"
 
 
-# portaudio stuff...
-CFLAGS="$CFLAGS `pkg-config --cflags portaudio-2.0`"
-LIBS="$CFLAGS `pkg-config --libs portaudio-2.0`"
-
-
 # Checks for header files.
 AC_HEADER_STDC
-AC_CHECK_HEADERS([arpa/inet.h fcntl.h limits.h malloc.h memory.h netinet/in.h stdint.h stdlib.h string.h strings.h sys/socket.h unistd.h utime.h, string.h])
-#AC_CHECK_HEADER([gsm.h], [], [AC_ERROR(Unable to find gsm header.)])
-#AC_CHECK_HEADER([portaudio.h], [], [AC_ERROR(Unable to find portaudio header.)])
+AC_CHECK_HEADERS([arpa/inet.h fcntl.h limits.h malloc.h memory.h netinet/in.h stdint.h stdlib.h string.h strings.h sys/socket.h unistd.h utime.h])
+
+
+# Check Portaudio
+PKG_CHECK_MODULES(PORTAUDIO, portaudio-2.0, ac_cv_portaudio=1, ac_cv_portaudio=0)
+AC_DEFINE_UNQUOTED([HAVE_PORTAUDIO],${ac_cv_portaudio},
+			[Set to 1 if you have portaudio.])
+AC_SUBST(PORTAUDIO_CFLAGS)
+AC_SUBST(PORTAUDIO_LIBS)
+
 
 # Checks for libraries.
 AC_CHECK_LIB([m], [sqrt])
-#AC_CHECK_LIB([gsm], [gsm_create])
-#AC_CHECK_LIB([portaudio], [Pa_Initialize])
-
-# Check for boost::thread
-#AX_BOOST_BASE()
-#AX_BOOST_THREAD()
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_HEADER_STAT

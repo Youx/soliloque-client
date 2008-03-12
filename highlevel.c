@@ -88,7 +88,7 @@ void receive(int sockfd, struct sockaddr_in * servaddr) {
 				send_keepalive(si->private_id, si->public_id, keepalive_counter++, sockfd, (struct sockaddr *)servaddr);
 				break;
       case GUINT32_TO_LE(0x0002bef4): /* some kind of keepalive? or maybe data? */
-				sleep(1);
+				usleep(10);
 				send_keepalive(si->private_id, si->public_id, keepalive_counter++, sockfd, (struct sockaddr *)servaddr);
 				break;
       case GUINT32_TO_LE(0x0c00bef3): /* speex 26.4 kbps */

@@ -7,9 +7,8 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "FreespeakController.h"
 
-FreespeakController * fscont;
+//FreespeakController * fscont;
 
 /*void addLineToLogger(char * line) {
   [NSApp addLog:[NSString stringWithCString:line]];

@@ -11,8 +11,8 @@
 #include "highlevel.h"
 #include "connection_request.h"
 
-#ifndef __APPLE__
-extern "C"
+#ifdef __cplusplus
+extern "C" {
 #endif
 int main2() {
   int sockfd;
@@ -32,3 +32,6 @@ int main2() {
   return 0;
 }
 
+#ifdef __cplusplus
+}
+#endif

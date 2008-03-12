@@ -40,6 +40,9 @@
 /* Define to 1 if you have the `pathconf' function. */
 #undef HAVE_PATHCONF
 
+/* Set to 1 if you have portaudio. */
+#undef HAVE_PORTAUDIO
+
 /* Define to 1 if your system has a GNU libc compatible `realloc' function,
    and to 0 otherwise. */
 #undef HAVE_REALLOC
@@ -90,8 +93,8 @@
 /* Define to 1 if you have the `utime' function. */
 #undef HAVE_UTIME
 
-/* Define to 1 if you have the <utime.h,> header file. */
-#undef HAVE_UTIME_H_
+/* Define to 1 if you have the <utime.h> header file. */
+#undef HAVE_UTIME_H
 
 /* Define to 1 if `utime(file, NULL)' sets file's timestamp to the present. */
 #undef HAVE_UTIME_NULL

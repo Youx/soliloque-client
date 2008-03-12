@@ -160,7 +160,6 @@ void decode_audio_packet(void * input) {
 	
 	for(i=0;i<nbframes;i++) {
 		while(!audio_to_speakers(out+(FRAME_SIZE*i), FRAME_SIZE));
-		//audio_to_speakers(out + ( FRAME_SIZE * i), FRAME_SIZE);
 	}
   free(out);
 }
