@@ -9,6 +9,7 @@ rm config.guess
 rm depcomp
 rm install-sh
 rm Makefile.in
+rm */Makefile.in
 rm missing
 rm data/*
 rm gui/*.in
