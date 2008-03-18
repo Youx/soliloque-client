@@ -1,5 +1,5 @@
 #include "highlevel.h"
-
+#include "log_packet.h"
 
 
 void printtype(int32_t type) {
@@ -112,6 +112,8 @@ void receive(int sockfd, struct sockaddr_in * servaddr) {
 				send_acknowledge(si->private_id, si->public_id, ack_counter++, sockfd, (struct sockaddr *)servaddr);
 				break;
       default: /* try this to keep it alive... */
+        sleep(1);
+        log_packet(data, n);
 				send_keepalive(si->private_id, si->public_id, keepalive_counter++, sockfd, (struct sockaddr *)servaddr);
     }
   }
