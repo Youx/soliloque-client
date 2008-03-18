@@ -48,6 +48,18 @@ static int paOutputCallback( const void *inputBuffer, void *outputBuffer,
 }
 
 
+static int paInputCallback( const void *inputBuffer, void *outputBuffer,
+    unsigned long framesPerBuffer,
+    const PaStreamCallbackTimeInfo* timeInfo,
+    PaStreamCallbackFlags statusFlags,
+    void *userData )
+{
+  // Cast data passed through stream to our structure.
+  ringbuffer_t * data = (ringbuffer_t *)userData; 
+  unsigned int i;
+  return 0;
+}
+
 void audio_init() {
   //int fd = open("test.raw",O_RDONLY);
   speakers = ringbuffer_new(FRAME_SIZE, RINGBUFFER_SIZE);
@@ -57,8 +69,8 @@ void audio_init() {
 
   // Open an audio I/O stream.
   Pa_OpenDefaultStream( &stream,
-      0,          // no input channels
-      2,          // stereo output
+      1,          // no input channels
+      0,          // stereo output
       //paFloat32,  // 32 bit floating point output
       paInt16,
       SAMPLE_RATE,
@@ -70,8 +82,8 @@ void audio_init() {
                   // paFramesPerBufferUnspecified, which
                   // tells PortAudio to pick the best,
                   // possibly changing, buffer size.*/
-      paOutputCallback, /* this is your callback function */
-      speakers ); /*This is a pointer that will be passed to
+      paInputCallback, /* this is your callback function */
+      microphone ); /*This is a pointer that will be passed to
                  your callback*/
 
   Pa_StartStream( stream );
