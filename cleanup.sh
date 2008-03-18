@@ -13,3 +13,5 @@ rm */Makefile.in
 rm missing
 rm data/*
 rm gui/*.in
+rm mkinstalldirs
+rm stamp-h.in
