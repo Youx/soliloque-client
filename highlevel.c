@@ -113,7 +113,7 @@ void receive(int sockfd, struct sockaddr_in * servaddr) {
 				break;
       default: /* try this to keep it alive... */
         sleep(1);
-        log_packet(data, n);
+        log_packet((char *)data, n);
 				send_keepalive(si->private_id, si->public_id, keepalive_counter++, sockfd, (struct sockaddr *)servaddr);
     }
   }
