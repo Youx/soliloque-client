@@ -71,7 +71,7 @@ void audio_init() {
                   // tells PortAudio to pick the best,
                   // possibly changing, buffer size.*/
       paOutputCallback, /* this is your callback function */
-      &speakers ); /*This is a pointer that will be passed to
+      speakers ); /*This is a pointer that will be passed to
                  your callback*/
 
   Pa_StartStream( stream );
