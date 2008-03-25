@@ -1,6 +1,7 @@
 #include "highlevel.h"
 #include "log_packet.h"
-
+#include "ringbuffer.h"
+#include "encoder.h"
 
 void printtype(int32_t type) {
   switch(type) {
@@ -26,7 +27,7 @@ void printtype(int32_t type) {
       printf("type : Keepalive\n");
       break;
     case GUINT32_TO_LE(0x0c00bef3): /* speex 26.4 kbps */
-    case GUINT32_TO_LE(0x0b00bef3): /* speex 18.2 kbps */
+    case GUINT32_TO_LE(0x0b00bef3): /* speex 18.2 kbps */ // <--- ici
     case GUINT32_TO_LE(0x0a00bef3): /* speex 15 kbps */
     case GUINT32_TO_LE(0x0900bef3): /* speex 11 kbps */
     case GUINT32_TO_LE(0x0800bef3): /* speex 8 kbps */
@@ -53,17 +54,30 @@ struct channel_list * chl;
 struct player_list * pll;
 int ack_counter = 1;
 int keepalive_counter = 2;
+int32_t audiosend_counter = 1;
+
+extern ringbuffer_t * microphone;
+
+int16_t encode_buffer[5*160];
 
 void receive(int sockfd, struct sockaddr_in * servaddr) {
-  int n;
+  int n, i;
 
   unsigned char data[10000];
 
   while(1) {
+	
+		if(ringbuffer_canRead(microphone, 5)) {
+			for(i=0;i<5;i++) {
+				ringbuffer_read(microphone, encode_buffer + (i*160) );
+			}
+			n = encode_speex(encode_buffer, 5, (char *)data);
+			send_audio(si->private_id, si->public_id, audiosend_counter++, (char *)data, n, sockfd, (struct sockaddr *)servaddr);
+		}
+		
     bzero(data, 10000);
     n = recvfrom(sockfd, data, 10000, 0, NULL, NULL);
-/*    printf("%i char received\n", n);*/
-//    printtype(*(int32_t *)data);
+    printtype(*(int32_t *)data);
 
     switch(*((int32_t *) data)) {
       case TYPE_SERVER_INFO:

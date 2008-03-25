@@ -23,8 +23,9 @@ typedef struct {
 } ringbuffer_t;
 
 
-int16_t * ringbuffer_read(ringbuffer_t * buffer);
+int16_t * ringbuffer_read(ringbuffer_t * buffer, int16_t * dest);
 int ringbuffer_write(ringbuffer_t * buffer, int16_t * data);
 ringbuffer_t * ringbuffer_new(int framesize, int buffersize);
+short ringbuffer_canRead(ringbuffer_t * buffer, int nbFrames);
 
 #endif

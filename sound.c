@@ -14,7 +14,7 @@
 
 
 static ringbuffer_t * speakers;
-static ringbuffer_t * microphone;
+ringbuffer_t * microphone;
 
 PaStream *stream;
 
@@ -30,12 +30,15 @@ static int paOutputCallback( const void *inputBuffer, void *outputBuffer,
     void *userData )
 {
   // Cast data passed through stream to our structure.
-  ringbuffer_t * data = (ringbuffer_t *)userData; 
+  ringbuffer_t * data = (ringbuffer_t *)userData;
+	int16_t frame[160];
+	
   int16_t * out = (int16_t *)outputBuffer;
   unsigned int i;
   (void) inputBuffer; // Prevent unused variable warning.
   int16_t * tmp;
-  if( (tmp = ringbuffer_read(data)) != NULL) {
+
+  if( (tmp = ringbuffer_read(data, frame)) != NULL) {
     for( i=0; i<framesPerBuffer; i++ ) {
       *out++ = tmp[i];  // left
       *out++ = tmp[i];  // right
