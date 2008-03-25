@@ -54,10 +54,19 @@ static int paInputCallback( const void *inputBuffer, void *outputBuffer,
     PaStreamCallbackFlags statusFlags,
     void *userData )
 {
+	long long moy = 0;
+	int i;
   // Cast data passed through stream to our structure.
   ringbuffer_t * data = (ringbuffer_t *)userData;
-  ringbuffer_write(data, (int16_t *)inputBuffer);
-  /*unsigned int i;*/
+	for(i=0;i<framesPerBuffer;i++) {
+		moy += ((int16_t *)inputBuffer)[i];
+	}
+	moy/=framesPerBuffer;
+
+  if(abs(moy) > 30) {
+		printf("write\n");
+		ringbuffer_write(data, (int16_t *)inputBuffer);
+	}
   return 0;
 }
 
