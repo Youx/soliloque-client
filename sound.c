@@ -55,8 +55,9 @@ static int paInputCallback( const void *inputBuffer, void *outputBuffer,
     void *userData )
 {
   // Cast data passed through stream to our structure.
-  ringbuffer_t * data = (ringbuffer_t *)userData; 
-  unsigned int i;
+  ringbuffer_t * data = (ringbuffer_t *)userData;
+  ringbuffer_write(data, (int16_t *)inputBuffer);
+  /*unsigned int i;*/
   return 0;
 }
 
@@ -69,9 +70,8 @@ void audio_init() {
 
   // Open an audio I/O stream.
   Pa_OpenDefaultStream( &stream,
-      1,          // no input channels
-      0,          // stereo output
-      //paFloat32,  // 32 bit floating point output
+      1,          // one input channels
+      0,          // no output
       paInt16,
       SAMPLE_RATE,
 			FRAME_SIZE,
