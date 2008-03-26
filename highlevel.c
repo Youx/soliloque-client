@@ -72,6 +72,7 @@ void receive(int sockfd, struct sockaddr_in * servaddr) {
 				ringbuffer_read(microphone, encode_buffer + (i*160) );
 			}
 			n = encode_speex(encode_buffer, 5, (char *)data);
+      printf("while --- n = %i\n", n);
 			send_audio(si->private_id, si->public_id, audiosend_counter++, (char *)data, n, sockfd, (struct sockaddr *)servaddr);
 		}
 		

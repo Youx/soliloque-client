@@ -8,11 +8,11 @@
 #define FRAME_SIZE 160
 
 
-char encode_speex(int16_t * input_frame, uint8_t nbframes, char * output) {
+int encode_speex(int16_t * input_frame, uint8_t nbframes, char * output) {
 	int i, bytesToWrite, nbBytes;
   SpeexBits bits;
   void * state;
-  int quality = 6; // 16.4
+  int quality = 9; // 16.9kbps
 
   speex_bits_init(&bits);
   state = speex_encoder_init(&speex_nb_mode);
@@ -26,21 +26,28 @@ char encode_speex(int16_t * input_frame, uint8_t nbframes, char * output) {
 	bytesToWrite = speex_bits_nbytes(&bits);
 	printf("Encoded size : %i bytes\n", bytesToWrite);
   nbBytes = speex_bits_write(&bits, output, bytesToWrite);
-
+  printf("speex_bits_write ok\n");
+  printf("nbBytes = %i\n", nbBytes);
 	return nbBytes;
 }
 
-void send_audio(int32_t public_id, int32_t private_id, int32_t counter, char * data, char data_size, int s, const struct sockaddr * to) {
+void send_audio(int32_t public_id, int32_t private_id, int32_t counter, char * data, int data_size, int s, const struct sockaddr * to) {
 	char buff[1000];
 	char * ptr = buff;
-	
-	*(int32_t * )ptr++ = GUINT32_TO_LE(0x0b00bef2);
+  printf("send_audio 0\n");
+	*(int32_t *)ptr++ = GUINT32_TO_LE(0x0b00bef2);
 	*(int32_t *)ptr++ = private_id;
 	*(int32_t *)ptr++ = public_id;
 	*(int32_t *)ptr++ = counter;
 	* ptr++ = 5;
-	memcpy(ptr, data, data_size);
+  printf("send_audio 1\n");
+  printf("buffer = 0x%x ; ptr = 0x%x ; data = 0x%x\n", buff, ptr, data);
+  printf("data_size = %i\n", data_size);
+
+	memcpy(ptr, data, data_size);   // <--- pb here
+  printf("send_audio 2\n");
 	sendto(s, buff, 17+data_size, 0, to, sizeof(*to));
+  printf("send_audio 3\n");
 }
 
 /*void encode_audio_packet(int16_t * input) {
