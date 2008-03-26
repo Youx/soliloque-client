@@ -13,6 +13,10 @@
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		9A3ECBDA0D7C20C600AEB013 /* ringbuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3ECBD80D7C20C600AEB013 /* ringbuffer.h */; };
 		9A3ECBDB0D7C20C600AEB013 /* ringbuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 9A3ECBD90D7C20C600AEB013 /* ringbuffer.c */; };
+		9A4AEAA70D9A70A300456A3B /* encoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 9A4AEAA30D9A70A300456A3B /* encoder.c */; };
+		9A4AEAA80D9A70A300456A3B /* encoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A4AEAA40D9A70A300456A3B /* encoder.h */; };
+		9A4AEAA90D9A70A300456A3B /* log_packet.c in Sources */ = {isa = PBXBuildFile; fileRef = 9A4AEAA50D9A70A300456A3B /* log_packet.c */; };
+		9A4AEAAA0D9A70A300456A3B /* log_packet.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A4AEAA60D9A70A300456A3B /* log_packet.h */; };
 		9A9DA0580D78D85F00B38830 /* zerofilt.c in Sources */ = {isa = PBXBuildFile; fileRef = 9A9DA03C0D78D82500B38830 /* zerofilt.c */; };
 		9A9DA0590D78D85F00B38830 /* gaincode.c in Sources */ = {isa = PBXBuildFile; fileRef = 9A9DA02D0D78D82500B38830 /* gaincode.c */; };
 		9A9DA05A0D78D85F00B38830 /* ham.c in Sources */ = {isa = PBXBuildFile; fileRef = 9A9DA02E0D78D82500B38830 /* ham.c */; };
@@ -151,6 +155,10 @@
 		8D1107320486CEB800E47090 /* Freespeak.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Freespeak.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A3ECBD80D7C20C600AEB013 /* ringbuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ringbuffer.h; sourceTree = "<group>"; };
 		9A3ECBD90D7C20C600AEB013 /* ringbuffer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ringbuffer.c; sourceTree = "<group>"; };
+		9A4AEAA30D9A70A300456A3B /* encoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = encoder.c; sourceTree = "<group>"; };
+		9A4AEAA40D9A70A300456A3B /* encoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = encoder.h; sourceTree = "<group>"; };
+		9A4AEAA50D9A70A300456A3B /* log_packet.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = log_packet.c; sourceTree = "<group>"; };
+		9A4AEAA60D9A70A300456A3B /* log_packet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = log_packet.h; sourceTree = "<group>"; };
 		9A9DA0250D78D82500B38830 /* autohf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = autohf.c; sourceTree = "<group>"; };
 		9A9DA0260D78D82500B38830 /* celp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = celp.h; sourceTree = "<group>"; };
 		9A9DA0270D78D82500B38830 /* celp_decode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = celp_decode.c; sourceTree = "<group>"; };
@@ -452,6 +460,10 @@
 		9A9DA0E10D78D98100B38830 /* core */ = {
 			isa = PBXGroup;
 			children = (
+				9A4AEAA30D9A70A300456A3B /* encoder.c */,
+				9A4AEAA40D9A70A300456A3B /* encoder.h */,
+				9A4AEAA50D9A70A300456A3B /* log_packet.c */,
+				9A4AEAA60D9A70A300456A3B /* log_packet.h */,
 				9A9DA0E20D78D9CC00B38830 /* toolbox.h */,
 				9A9DA0E30D78D9CC00B38830 /* toolbox.c */,
 				9A9DA0E40D78D9CC00B38830 /* test.c */,
@@ -547,6 +559,8 @@
 				9A9DA1360D78DA3500B38830 /* server_info.h in Headers */,
 				9A9DA1370D78DA3500B38830 /* message2.h in Headers */,
 				9A3ECBDA0D7C20C600AEB013 /* ringbuffer.h in Headers */,
+				9A4AEAA80D9A70A300456A3B /* encoder.h in Headers */,
+				9A4AEAAA0D9A70A300456A3B /* log_packet.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -740,6 +754,8 @@
 				9A9DA1270D78DA2300B38830 /* channel_list.c in Sources */,
 				9A9DA1280D78DA2300B38830 /* acknowledge.c in Sources */,
 				9A3ECBDB0D7C20C600AEB013 /* ringbuffer.c in Sources */,
+				9A4AEAA70D9A70A300456A3B /* encoder.c in Sources */,
+				9A4AEAA90D9A70A300456A3B /* log_packet.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

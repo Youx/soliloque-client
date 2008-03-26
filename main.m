@@ -15,18 +15,20 @@
 }*/
 
 void *thread_func( void *vptr_args ){
-  main2();
+  //main2();
   //  sleep(2);
   return NULL;
 }
 
 int main(int argc, char *argv[])
 {
+  main2();
   //fscont = [[FreespeakController alloc] init];
-  pthread_t thread;
-  pthread_create(&thread, NULL, thread_func, NULL);
+  //pthread_t thread;
+  //pthread_create(&thread, NULL, thread_func, NULL);
   
-  return NSApplicationMain(argc,  (const char **) argv);
+  //return NSApplicationMain(argc,  (const char **) argv);
+  return 0;
 }
 
 
