@@ -54,7 +54,7 @@ struct channel_list * chl;
 struct player_list * pll;
 int ack_counter = 1;
 int keepalive_counter = 2;
-int32_t audiosend_counter = 1;
+int32_t audiosend_counter = 0;
 
 extern ringbuffer_t * microphone;
 
@@ -67,13 +67,12 @@ void receive(int sockfd, struct sockaddr_in * servaddr) {
 
   while(1) {
 	
-		if(ringbuffer_canRead(microphone, 5)) {
+		while(ringbuffer_canRead(microphone, 5)) {
 			for(i=0;i<5;i++) {
 				ringbuffer_read(microphone, encode_buffer + (i*160) );
 			}
 			n = encode_speex(encode_buffer, 5, (char *)data);
-      printf("while --- n = %i\n", n);
-			send_audio(si->private_id, si->public_id, audiosend_counter++, (char *)data, n, sockfd, (struct sockaddr *)servaddr);
+			send_audio(si->public_id, si->private_id, audiosend_counter++, (char *)data, n, sockfd, (struct sockaddr *)servaddr);
 		}
 		
     bzero(data, 10000);

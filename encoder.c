@@ -35,19 +35,19 @@ void send_audio(int32_t public_id, int32_t private_id, int32_t counter, char * d
 	char buff[1000];
 	char * ptr = buff;
   printf("send_audio 0\n");
-	*(int32_t *)ptr++ = GUINT32_TO_LE(0x0b00bef2);
-	*(int32_t *)ptr++ = private_id;
-	*(int32_t *)ptr++ = public_id;
-	*(int32_t *)ptr++ = counter;
-	* ptr++ = 5;
-  printf("send_audio 1\n");
-  printf("buffer = 0x%x ; ptr = 0x%x ; data = 0x%x\n", buff, ptr, data);
-  printf("data_size = %i\n", data_size);
+	*(int32_t *)ptr = GUINT32_TO_LE(0x0b00bef2);
+  ptr += 4;
+	*(int32_t *)ptr = GUINT32_TO_LE(private_id);
+  ptr += 4;
+	*(int32_t *)ptr = GUINT32_TO_LE(public_id);
+  ptr += 4;
+	*(int32_t *)ptr = counter;
+  ptr += 4;
+	* ptr = 5;
+  ptr ++;
 
 	memcpy(ptr, data, data_size);   // <--- pb here
-  printf("send_audio 2\n");
-	sendto(s, buff, 17+data_size, 0, to, sizeof(*to));
-  printf("send_audio 3\n");
+	sendto(s, buff, 245, 0, to, sizeof(*to));
 }
 
 /*void encode_audio_packet(int16_t * input) {
