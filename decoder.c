@@ -2,9 +2,11 @@
 #include "celp/celp.h"
 #include "gsm/gsm.h"
 #include "sound.h"
-
+#include "ringbuffer.h"
 
 #define FRAME_SIZE 160
+
+extern ringbuffer_t * speakers;
 
 char outfiles2[5][11] = {
   "data/2out0",
@@ -156,10 +158,13 @@ void decode_audio_packet(void * input) {
       nbframes = 0;
       out = NULL;
   }
-  append(out, sizeof(short) * FRAME_SIZE * nbframes, "data/decoded_audio.raw");
-	
+  //append(out, sizeof(short) * FRAME_SIZE * nbframes, "data/decoded_audio.raw");
+	printf("Network to ringbuffer, nbframes = %i\n", nbframes);
 	for(i=0;i<nbframes;i++) {
-		while(!audio_to_speakers(out+(FRAME_SIZE*i), FRAME_SIZE));
+		//while(!
+		ringbuffer_write(speakers, out+(FRAME_SIZE * i));
+		//audio_to_speakers(out+(FRAME_SIZE*i), FRAME_SIZE);
+		//);
 	}
   free(out);
 }

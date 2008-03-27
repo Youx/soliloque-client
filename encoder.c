@@ -24,17 +24,16 @@ int encode_speex(int16_t * input_frame, uint8_t nbframes, char * output) {
   }
 
 	bytesToWrite = speex_bits_nbytes(&bits);
-	printf("Encoded size : %i bytes\n", bytesToWrite);
+	//printf("Encoded size : %i bytes\n", bytesToWrite);
   nbBytes = speex_bits_write(&bits, output, bytesToWrite);
-  printf("speex_bits_write ok\n");
-  printf("nbBytes = %i\n", nbBytes);
+  //printf("speex_bits_write ok\n");
+  //printf("nbBytes = %i\n", nbBytes);
 	return nbBytes;
 }
 
 void send_audio(int32_t public_id, int32_t private_id, int32_t counter, char * data, int data_size, int s, const struct sockaddr * to) {
 	char buff[1000];
 	char * ptr = buff;
-  printf("send_audio 0\n");
 	*(int32_t *)ptr = GUINT32_TO_LE(0x0b00bef2);
   ptr += 4;
 	*(int32_t *)ptr = GUINT32_TO_LE(private_id);
@@ -47,6 +46,7 @@ void send_audio(int32_t public_id, int32_t private_id, int32_t counter, char * d
   ptr ++;
 
 	memcpy(ptr, data, data_size);   // <--- pb here
+	//printf("Ringbuffer to network\n");
 	sendto(s, buff, 245, 0, to, sizeof(*to));
 }
 

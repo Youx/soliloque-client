@@ -8,13 +8,18 @@
 
 #define SAMPLE_RATE 8000
 #define FRAME_SIZE 160
-#define RINGBUFFER_SIZE 64
+#define RINGBUFFER_SIZE 1024 // 64
 // 64 frames @ 20ms/frame = 1.2 sec
 // 64 frames @ 320B/frame = 20kB
 
 
-static ringbuffer_t * speakers;
+ringbuffer_t * speakers;
 ringbuffer_t * microphone;
+
+struct myAudio {
+	ringbuffer_t * speakers;
+	ringbuffer_t * microphone;
+} audioIO;
 
 PaStream *stream;
 
@@ -51,7 +56,7 @@ static int paOutputCallback( const void *inputBuffer, void *outputBuffer,
 }
 
 
-static int paInputCallback( const void *inputBuffer, void *outputBuffer,
+static int paCallback( const void *inputBuffer, void *outputBuffer,
     unsigned long framesPerBuffer,
     const PaStreamCallbackTimeInfo* timeInfo,
     PaStreamCallbackFlags statusFlags,
@@ -59,17 +64,39 @@ static int paInputCallback( const void *inputBuffer, void *outputBuffer,
 {
 	long long moy = 0;
 	int i;
+	int16_t frame[160];
+	int16_t * out = (int16_t *)outputBuffer;
+	int16_t * in = (int16_t *)inputBuffer;
+	int16_t * tmp;
   // Cast data passed through stream to our structure.
-  ringbuffer_t * data = (ringbuffer_t *)userData;
+	struct myAudio * data = (struct myAudio *)userData;
+	
+  ringbuffer_t * dataIn = data->microphone;
+  ringbuffer_t * dataOut = data->speakers;
+
+	/* Data in */
 	for(i=0;i<framesPerBuffer;i++) {
-		moy += ((int16_t *)inputBuffer)[i];
+		moy += in[i];
 	}
 	moy/=framesPerBuffer;
 
   if(abs(moy) > 30) {
-		printf("write\n");
-		ringbuffer_write(data, (int16_t *)inputBuffer);
+		printf("Microphone to ringbuffer\n");
+		ringbuffer_write(dataIn, in);
 	}
+	
+	/* Data out */
+  if( (tmp=ringbuffer_read(dataOut, frame)) != NULL) {
+		printf("Ringbuffer to speakers\n");
+    for( i=0; i<framesPerBuffer; i++ ) {
+      *out++ = frame[i];  // left
+      *out++ = frame[i];  // right
+    }    
+  } else {
+		printf("No sound.\n");
+    bzero(out, sizeof(int16_t) * framesPerBuffer * 2);
+  }
+	
   return 0;
 }
 
@@ -78,12 +105,15 @@ void audio_init() {
   speakers = ringbuffer_new(FRAME_SIZE, RINGBUFFER_SIZE);
   microphone = ringbuffer_new(FRAME_SIZE, RINGBUFFER_SIZE);
 	
+	audioIO.speakers = speakers;
+	audioIO.microphone = microphone;
+	
   Pa_Initialize();
 
   // Open an audio I/O stream.
   Pa_OpenDefaultStream( &stream,
       1,          // one input channels
-      0,          // no output
+      2,          // no output
       paInt16,
       SAMPLE_RATE,
 			FRAME_SIZE,
@@ -94,8 +124,8 @@ void audio_init() {
                   // paFramesPerBufferUnspecified, which
                   // tells PortAudio to pick the best,
                   // possibly changing, buffer size.*/
-      paInputCallback, /* this is your callback function */
-      microphone ); /*This is a pointer that will be passed to
+      paCallback, /* this is your callback function */
+      &audioIO ); /*This is a pointer that will be passed to
                  your callback*/
 
   Pa_StartStream( stream );

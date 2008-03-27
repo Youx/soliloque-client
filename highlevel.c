@@ -77,7 +77,7 @@ void receive(int sockfd, struct sockaddr_in * servaddr) {
 		
     bzero(data, 10000);
     n = recvfrom(sockfd, data, 10000, 0, NULL, NULL);
-    printtype(*(int32_t *)data);
+    //printtype(*(int32_t *)data);
 
     switch(*((int32_t *) data)) {
       case TYPE_SERVER_INFO:
