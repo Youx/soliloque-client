@@ -14,10 +14,8 @@
 
 int16_t * ringbuffer_read(ringbuffer_t * buffer, int16_t * dest) {
   if(buffer->readidx == buffer->writeidx) {
-		printf("buffer_empty\n");
     return 0; // buffer empty
   } else {
-		printf("buffer read\n");
 		memcpy(dest, buffer->data + (buffer->readidx * buffer->frame_size), buffer->frame_size * sizeof(int16_t));
     //res = (buffer->data + (buffer->readidx * buffer->frame_size));
 		buffer->readidx = ((buffer->readidx + 1) % buffer->buffer_size);
@@ -36,7 +34,6 @@ short ringbuffer_canRead(ringbuffer_t * buffer, int nbFrames) {
 
 int ringbuffer_write(ringbuffer_t * buffer, int16_t * data) {
   if( ((buffer->writeidx + 1) % buffer->buffer_size) == buffer->readidx ) {
-    fprintf(stderr, "Buffer full!\n");
     return 0; // buffer full
   } else {
     memcpy( (buffer->data + (buffer->writeidx * buffer->frame_size)), data, buffer->frame_size * sizeof(int16_t));

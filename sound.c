@@ -5,6 +5,7 @@
 #include <fcntl.h>
 #include <strings.h>
 #include "ringbuffer.h"
+#include <semaphore.h>
 
 #define SAMPLE_RATE 8000
 #define FRAME_SIZE 160
@@ -12,7 +13,7 @@
 // 64 frames @ 20ms/frame = 1.2 sec
 // 64 frames @ 320B/frame = 20kB
 
-
+extern sem_t * sem_microphone;
 ringbuffer_t * speakers;
 ringbuffer_t * microphone;
 
@@ -28,34 +29,6 @@ PaStream *stream;
  ** It may called at interrupt level on some machines so don't do anything
  ** that could mess up the system like calling malloc() or free().
  */ 
-static int paOutputCallback( const void *inputBuffer, void *outputBuffer,
-    unsigned long framesPerBuffer,
-    const PaStreamCallbackTimeInfo* timeInfo,
-    PaStreamCallbackFlags statusFlags,
-    void *userData )
-{
-  // Cast data passed through stream to our structure.
-  ringbuffer_t * data = (ringbuffer_t *)userData;
-	int16_t frame[160];
-	
-  int16_t * out = (int16_t *)outputBuffer;
-  unsigned int i;
-  (void) inputBuffer; // Prevent unused variable warning.
-  int16_t * tmp;
-
-  if( (tmp = ringbuffer_read(data, frame)) != NULL) {
-    for( i=0; i<framesPerBuffer; i++ ) {
-      *out++ = tmp[i];  // left
-      *out++ = tmp[i];  // right
-    }    
-  } else {
-    bzero(out, sizeof(int16_t) * framesPerBuffer * 2);
-  }
-
-  return 0;
-}
-
-
 static int paCallback( const void *inputBuffer, void *outputBuffer,
     unsigned long framesPerBuffer,
     const PaStreamCallbackTimeInfo* timeInfo,
@@ -75,25 +48,16 @@ static int paCallback( const void *inputBuffer, void *outputBuffer,
   ringbuffer_t * dataOut = data->speakers;
 
 	/* Data in */
-	for(i=0;i<framesPerBuffer;i++) {
-		moy += in[i];
-	}
-	moy/=framesPerBuffer;
-
-  if(abs(moy) > 30) {
-		printf("Microphone to ringbuffer\n");
-		ringbuffer_write(dataIn, in);
-	}
+  ringbuffer_write(dataIn, in);
+  sem_post(sem_microphone);
 	
 	/* Data out */
   if( (tmp=ringbuffer_read(dataOut, frame)) != NULL) {
-		printf("Ringbuffer to speakers\n");
     for( i=0; i<framesPerBuffer; i++ ) {
       *out++ = frame[i];  // left
       *out++ = frame[i];  // right
     }    
   } else {
-		printf("No sound.\n");
     bzero(out, sizeof(int16_t) * framesPerBuffer * 2);
   }
 	
@@ -101,7 +65,6 @@ static int paCallback( const void *inputBuffer, void *outputBuffer,
 }
 
 void audio_init() {
-  //int fd = open("test.raw",O_RDONLY);
   speakers = ringbuffer_new(FRAME_SIZE, RINGBUFFER_SIZE);
   microphone = ringbuffer_new(FRAME_SIZE, RINGBUFFER_SIZE);
 	
@@ -136,10 +99,6 @@ void audio_close() {
 	Pa_CloseStream(stream);
 	Pa_Terminate();
 }
-
-
-
-
 
 int audio_to_speakers(int16_t * data, int size) {
   return ringbuffer_write(speakers, data);

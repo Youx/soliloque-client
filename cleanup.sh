@@ -15,3 +15,6 @@ rm data/*
 rm gui/*.in
 rm mkinstalldirs
 rm stamp-h.in
+rm -rf autom4te.cache/
+rm -r .deps
+rm -r */.deps

@@ -159,7 +159,7 @@ void decode_audio_packet(void * input) {
       out = NULL;
   }
   //append(out, sizeof(short) * FRAME_SIZE * nbframes, "data/decoded_audio.raw");
-	printf("Network to ringbuffer, nbframes = %i\n", nbframes);
+	//printf("Network to ringbuffer, nbframes = %i\n", nbframes);
 	for(i=0;i<nbframes;i++) {
 		//while(!
 		ringbuffer_write(speakers, out+(FRAME_SIZE * i));

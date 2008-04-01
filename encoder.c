@@ -8,32 +8,47 @@
 #define FRAME_SIZE 160
 
 
+
 int encode_speex(int16_t * input_frame, uint8_t nbframes, char * output) {
 	int i, bytesToWrite, nbBytes;
   SpeexBits bits;
   void * state;
   int quality = 9; // 16.9kbps
+  long long total;
 
   speex_bits_init(&bits);
   state = speex_encoder_init(&speex_nb_mode);
   speex_encoder_ctl(state, SPEEX_SET_QUALITY, &quality);
   speex_bits_reset(&bits);
+  
+  total = 0;
+  for(i=0;i<5*160;i++) {
+    total += input_frame[i];
+  }
+  total /= (5*160);
+  if(abs(total) < 10)
+    return 0;
 
   for(i=0;i<5;i++) {
 	  speex_encode_int(state, input_frame + (i*160), &bits);
   }
 
 	bytesToWrite = speex_bits_nbytes(&bits);
-	//printf("Encoded size : %i bytes\n", bytesToWrite);
   nbBytes = speex_bits_write(&bits, output, bytesToWrite);
-  //printf("speex_bits_write ok\n");
-  //printf("nbBytes = %i\n", nbBytes);
+  speex_bits_destroy(&bits);
+  speex_decoder_destroy(state);
 	return nbBytes;
 }
 
 void send_audio(int32_t public_id, int32_t private_id, int32_t counter, char * data, int data_size, int s, const struct sockaddr * to) {
 	char buff[1000];
 	char * ptr = buff;
+
+  if(data_size == 0) {
+    printf("data_size == 0\n");
+    //usleep(90000); // 100ms
+    return;
+  }
 	*(int32_t *)ptr = GUINT32_TO_LE(0x0b00bef2);
   ptr += 4;
 	*(int32_t *)ptr = GUINT32_TO_LE(private_id);
@@ -45,8 +60,8 @@ void send_audio(int32_t public_id, int32_t private_id, int32_t counter, char * d
 	* ptr = 5;
   ptr ++;
 
-	memcpy(ptr, data, data_size);   // <--- pb here
-	//printf("Ringbuffer to network\n");
+	memcpy(ptr, data, data_size); 
+  printf("audio sent\n");
 	sendto(s, buff, 245, 0, to, sizeof(*to));
 }
 
