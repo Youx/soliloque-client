@@ -9,16 +9,15 @@
 
 
 
-int encode_speex(int16_t * input_frame, uint8_t nbframes, char * output) {
+static int encode_speex(int16_t * input_frame, uint8_t nbframes, char * output, int bitrate) {
 	int i, bytesToWrite, nbBytes;
   SpeexBits bits;
   void * state;
-  int quality = 9; // 16.9kbps
   long long total;
 
   speex_bits_init(&bits);
   state = speex_encoder_init(&speex_nb_mode);
-  speex_encoder_ctl(state, SPEEX_SET_QUALITY, &quality);
+  speex_encoder_ctl(state, SPEEX_SET_QUALITY, &bitrate);
   speex_bits_reset(&bits);
   
   total = 0;
@@ -65,49 +64,38 @@ void send_audio(int32_t public_id, int32_t private_id, int32_t counter, char * d
 	sendto(s, buff, 245, 0, to, sizeof(*to));
 }
 
-/*void encode_audio_packet(int16_t * input) {
-  uint8_t nbframes;
-  int16_t * out;
-  char * ptr = (char *)input;
-  uint8_t codec;
-	int i;
+int encode_audio(int16_t * input_frame, uint8_t nbframes, char * output, int codec) {
+	int i, nbBytes;
 	
-	
-  ptr+=3;
-  codec = *ptr;
-  ptr+=19;
-  nbframes = *ptr; 
-  ptr++;
-
 	//  printf(">>>> CODEC : 0x%x\n", *((char *)(&codec)));
   switch(codec) {
     case CODEC_SPEEX_25_9:
-      out = decode_speex(ptr, nbframes, 492);
+      nbBytes = encode_speex(input_frame, nbframes, output, 7);
       break;
     case CODEC_SPEEX_19_6:
-      out = decode_speex(ptr, nbframes, 364);
+      nbBytes = encode_speex(input_frame, nbframes, output, 6);
       break;
     case CODEC_SPEEX_16_3:
-      out = decode_speex(ptr, nbframes, 300);
+      nbBytes = encode_speex(input_frame, nbframes, output, 5);
       break;
     case CODEC_SPEEX_12_3:
-      out = decode_speex(ptr, nbframes, 220);
+      nbBytes = encode_speex(input_frame, nbframes, output, 4);
       break;
     case CODEC_SPEEX_9_3:
-      out = decode_speex(ptr, nbframes, 160);
+      nbBytes = encode_speex(input_frame, nbframes, output, 3);
       break;
     case CODEC_SPEEX_7_2:
-      out = decode_speex(ptr, nbframes, 119);
+      nbBytes = encode_speex(input_frame, nbframes, output, 2);
       break;
     case CODEC_SPEEX_5_2:
-      out = decode_speex(ptr, nbframes, 79);
+      nbBytes = encode_speex(input_frame, nbframes, output, 8);
       break;
     case CODEC_SPEEX_3_4:
-      out = decode_speex(ptr, nbframes, 43);
+      nbBytes = encode_speex(input_frame, nbframes, output, 1);
       break;
-    case CODEC_GSM_14_8:
+/*  case CODEC_GSM_14_8:
       nbframes = 5;
-      out = decode_gsm(ptr,nbframes);
+      out = encode_gsm(ptr,nbframes);
       break;
     case CODEC_GSM_16_4:
       nbframes = 3;
@@ -123,12 +111,7 @@ void send_audio(int32_t public_id, int32_t private_id, int32_t counter, char * d
       break;
     default:
       nbframes = 0;
-      out = NULL;
+      out = NULL;*/
   }
-  append(out, sizeof(short) * FRAME_SIZE * nbframes, "data/decoded_audio.raw");
-	
-	for(i=0;i<nbframes;i++) {
-		while(!audio_to_speakers(out+(FRAME_SIZE*i), FRAME_SIZE));
-	}
-  free(out);
-}*/
+  return nbBytes;
+}

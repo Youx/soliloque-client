@@ -32,7 +32,7 @@ void * encode_thread(void * args) {
     for(i=0;i<5;i++)
       ringbuffer_read(microphone, encode_buffer + (i*160) );
 
-    n = encode_speex(encode_buffer, 5, (char *)data);
+    n = encode_audio(encode_buffer, 5, (char *)data, CODEC_SPEEX_19_6);
     send_audio(si->public_id, si->private_id, audiosend_counter++,
         (char *)data, n, sockfd, (struct sockaddr *)pservaddr);
 		//}

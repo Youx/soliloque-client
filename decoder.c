@@ -8,22 +8,6 @@
 
 extern ringbuffer_t * speakers;
 
-char outfiles2[5][11] = {
-  "data/2out0",
-  "data/2out1",
-  "data/2out2",
-  "data/2out3",
-  "data/2out4"
-};
-
-char outfiles[5][10] = {
-  "data/out0",
-  "data/out1",
-  "data/out2",
-  "data/out3",
-  "data/out4"
-};
-
 
 static int16_t * decode_speex(void * input, uint8_t nbframes, int datasize) {
   int16_t * out = (int16_t *)calloc(FRAME_SIZE * nbframes, sizeof(int16_t));
@@ -158,13 +142,8 @@ void decode_audio_packet(void * input) {
       nbframes = 0;
       out = NULL;
   }
-  //append(out, sizeof(short) * FRAME_SIZE * nbframes, "data/decoded_audio.raw");
-	//printf("Network to ringbuffer, nbframes = %i\n", nbframes);
 	for(i=0;i<nbframes;i++) {
-		//while(!
 		ringbuffer_write(speakers, out+(FRAME_SIZE * i));
-		//audio_to_speakers(out+(FRAME_SIZE*i), FRAME_SIZE);
-		//);
 	}
   free(out);
 }
